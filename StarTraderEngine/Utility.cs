@@ -1,7 +1,7 @@
-﻿using System;
-
+﻿
 namespace StarTrader
 {
+    using System;
 	using System.Reflection;
 
 	public static class AttributeHelper<TAttributeType, TType> where TAttributeType : Attribute, new()
