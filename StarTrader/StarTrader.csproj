@@ -44,9 +44,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BiddingStage.cs" />
+    <Compile Include="BuyTransaction.cs" />
     <Compile Include="Commodity.cs" />
     <Compile Include="CommodityMarket.cs" />
+    <Compile Include="CommodityStorage.cs" />
     <Compile Include="CrewClass.cs" />
+    <Compile Include="Dice.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -55,17 +59,26 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Game.cs" />
+    <Compile Include="GameEvent.cs" />
     <Compile Include="HullType.cs" />
+    <Compile Include="InitiativeStage.cs" />
+    <Compile Include="InvestmentStage.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reputation.cs" />
     <Compile Include="Scenario.cs" />
+    <Compile Include="SellTransaction.cs" />
     <Compile Include="ShipModule.cs" />
     <Compile Include="Spaceship.cs" />
     <Compile Include="StarSystem.cs" />
+    <Compile Include="Transaction.cs" />
+    <Compile Include="TransactionStage.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Warehouse.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

@@ -1,14 +1,19 @@
 ﻿namespace StarTrader
 {
-	class Game
+	using System.Collections.Generic;
+
+	static class Game
 	{
 		public static Scenario Scenario;
+		public static readonly Dictionary<StarSystemType, StarSystem> StarSystems = new Dictionary<StarSystemType, StarSystem>();
 
 		static Game()
 		{
 			// TODO
-			Game.Scenario = Scenario.FreeTrade;
+			Scenario = Scenario.FreeTrade;
+			StarSystem.Initialize();
 		}
 
+		public static List<Player> Players { get; set; }
 	}
 }

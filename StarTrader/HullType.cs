@@ -14,14 +14,23 @@ namespace StarTrader
 
 		public int Defense { get; set; }
 
+		/// <summary>
+		/// Freight capacity
+		/// </summary>
 		public int Capacity { get; set; }
 
 		public int Price { get; set; }
 
 		public int RepairCost { get; set; }
 
+		/// <summary>
+		/// Determines if the ship can land on planet surface
+		/// </summary>
 		public bool Aerodynamic { get; set; }
 
+		/// <summary>
+		/// Implies illegal
+		/// </summary>
 		public bool Military { get; set; }
 
 		internal static HullAttribute GetAttibute(HullType hullType)

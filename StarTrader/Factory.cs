@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StarTrader
+﻿namespace StarTrader
 {
-	class Factory
+	public class Factory
 	{
 		public Factory(Player owner, Commodity commodity)
 		{

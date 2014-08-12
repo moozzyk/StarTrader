@@ -2,17 +2,26 @@
 {
 	using System;
 
-	class Reputation
+	public class Reputation
 	{
 		private const int Max = 40;
 		private const int Initial = 20;
 
-		public Reputation()
+		public Reputation(int political, int economic, int criminal)
 		{
 			Current = Initial;
+			PoliticalTies = political;
+			EconomicTies = economic;
+			CriminalTies = criminal;
 		}
 
 		public int Current { get; private set; }
+
+		public int PoliticalTies { get; private set; }
+		
+		public int EconomicTies { get; private set; }
+		
+		public int CriminalTies { get; private set; }
 
 		/// <summary>
 		/// Called during Control Stage
