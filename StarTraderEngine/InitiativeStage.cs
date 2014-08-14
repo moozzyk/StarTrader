@@ -5,7 +5,7 @@
 	using System.Diagnostics;
 	using System.Linq;
 
-	class InitiativeStage
+	public class InitiativeStage
 	{
 		private readonly Dictionary<Player, int> m_initiativeBids;
 		private readonly List<Transaction> m_commodityBids;

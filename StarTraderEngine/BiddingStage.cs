@@ -2,7 +2,7 @@
 {
 	using System.Collections.Generic;
 
-	class BiddingStage
+	public class BiddingStage
 	{
 		private readonly Dictionary<Player, int> m_initiativeBids = new Dictionary<Player, int>();
 		private readonly List<Transaction> m_commodityBids = new List<Transaction>();
