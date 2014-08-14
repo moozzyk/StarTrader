@@ -39,7 +39,7 @@ namespace StarTrader
 		}
 	}
 
-	enum HullType
+	public enum HullType
 	{
 		[Hull(ModuleCapacity = 1, Interception = 2, Crew = 1, Attack = 5, Defense = 4, Capacity = 0, Price = 250, RepairCost = 60, Aerodynamic = true, Military = true)]
 		Dagger,

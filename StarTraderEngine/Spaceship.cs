@@ -14,7 +14,7 @@
 		Planet
 	}
 
-	class Spaceship : CommodityStorage, IEnumerable<ShipModule>
+	public class Spaceship : CommodityStorage, IEnumerable<ShipModule>
 	{
 
 		private readonly HullAttribute m_hull;

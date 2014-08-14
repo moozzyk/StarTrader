@@ -2,7 +2,7 @@
 {
 	using System.Collections.Generic;
 
-	static class Game
+	public static class Game
 	{
 		public static Scenario Scenario;
 		public static readonly Dictionary<StarSystemType, StarSystem> StarSystems = new Dictionary<StarSystemType, StarSystem>();
