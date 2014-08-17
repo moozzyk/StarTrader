@@ -79,7 +79,7 @@
 					// calculate allowed quantity
 					int mapPosition = FindLeftMostPriceModifier(buyTransaction.OfferPrice - Price);
 
-					// the allowed quantity is the number of positions current modifier is to the right of the left most position found above
+					// the allowed quantity is the number of positions current modifier is to the right of the left-most position found above
 					int allowedQuantity = currentModifierPosition - mapPosition;
 					if (allowedQuantity > 0)
 					{
@@ -99,7 +99,7 @@
 					// calculate allowed quantity
 					int mapPosition = FindRightMostPriceModifier(sellTransaction.OfferPrice - Price);
 
-					// the allowed quantity is the number of positions current modifier is to the left of the right most position found above
+					// the allowed quantity is the number of positions current modifier is to the left of the right-most position found above
 					int allowedQuantity = mapPosition - currentModifierPosition;
 					if (allowedQuantity > 0)
 					{
@@ -120,8 +120,9 @@
 
 		private int GetTransactionOrderByValue(Transaction transaction)
 		{
-			// to ensure players with higher intiative are considered first we'll adjust the orderby clause to 100*price + initiative
-			return transaction.OfferPrice * 100 + transaction.Player.Initiative;
+			// to ensure players with higher intiative are considered first we'll adjust the orderby clause to 1000*price + initiative
+			Debug.Assert(transaction.Player.Initiative < 1000); // don't cheat
+			return transaction.OfferPrice * 1000 + Math.Min(transaction.Player.Initiative, 999);
 		}
 
 		private int GetMapIndex(int modifier)

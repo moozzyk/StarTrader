@@ -5,15 +5,15 @@ namespace StarTrader
 	using System.Diagnostics;
 	using System.Linq;
 
-	class InitiativeStage
+	public class InitiativeStage
 	{
-	    private readonly Game m_game;
+		private readonly Game m_game;
 		private readonly Dictionary<Player, int> m_initiativeBids;
 		private readonly List<Transaction> m_commodityBids;
 
 		public InitiativeStage(Game game, Dictionary<Player, int> initiativeBids, List<Transaction> commodityBids)
 		{
-		    m_game = game;
+			m_game = game;
 			m_initiativeBids = initiativeBids;
 			m_commodityBids = commodityBids;
 		}
@@ -41,8 +41,8 @@ namespace StarTrader
 			while (retry);
 
 			// order players by initiative
-            // TODO: this needs to be more explicit - the order may/will be lost when saved to DB
-            // m_game.Players = m_game.Players.OrderBy(player => player.Initiative).ToList();
+			// TODO: this needs to be more explicit - the order may/will be lost when saved to DB
+			// m_game.Players = m_game.Players.OrderBy(player => player.Initiative).ToList();
 
 			// TODO - set the order from ui
 			int current = 0;
