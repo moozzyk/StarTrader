@@ -7,12 +7,12 @@
 
 	public class Game
 	{
-		public readonly Dictionary<StarSystemType, StarSystem> StarSystems = new Dictionary<StarSystemType, StarSystem>();
+		public readonly Dictionary<StarSystemType, StarSystem> StarSystems;
 
 	    public Game()
 	    {
 	        Turn = -1;
-	        // TODO: Initialize StarSystems here
+	        StarSystems = StarSystemFactory.CreateStarSystems();
 	    }
 
 	    public void Initialize(string[] playerNames, Scenario scenario)

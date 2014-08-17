@@ -14,13 +14,13 @@
 			CriminalTies = criminal;
 		}
 
-		public int Current { get; private set; }
+		public int Current { get; set; }
 
-		public int PoliticalTies { get; private set; }
+		public int PoliticalTies { get; set; }
 		
-		public int EconomicTies { get; private set; }
+		public int EconomicTies { get; set; }
 		
-		public int CriminalTies { get; private set; }
+		public int CriminalTies { get; set; }
 
 		/// <summary>
 		/// Called during Control Stage
