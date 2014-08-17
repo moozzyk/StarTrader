@@ -3,8 +3,6 @@
 	using System;
 	using System.Collections;
 	using System.Collections.Generic;
-	using System.ComponentModel;
-	using System.Linq;
 
 	public class StarSystemAttribute : Attribute
 	{
@@ -49,48 +47,6 @@
 
 	public class StarSystem : IEnumerable<CommodityMarket>
 	{
-		private static readonly StarSystem GammaLeporis = new StarSystem(StarSystemType.GammaLeporis, new[] { Commodity.Polymer })
-		{
-			new CommodityMarket(Commodity.Polymer, 2, 1)
-		};
-
-		private static readonly StarSystem EpsilonEridani = new StarSystem(StarSystemType.EpsilonEridani, new Commodity[] { })
-		{
-			new CommodityMarket(Commodity.Polymer, 5, -7), 
-			new CommodityMarket(Commodity.Isotope, 10, -7), 
-			new CommodityMarket(Commodity.Food, 14, -8), 
-			new CommodityMarket(Commodity.Component, 17, -9)
-		};
-
-		private static readonly StarSystem TauCeti = new StarSystem(StarSystemType.TauCeti, new[] { Commodity.Isotope })
-		{
-			new CommodityMarket(Commodity.Polymer, 6, -10),
-			new CommodityMarket(Commodity.Isotope, 5, -9)
-		};
-
-		private static readonly StarSystem BetaHydri = new StarSystem(StarSystemType.BetaHydri, new Commodity[] { })
-		{
-			new CommodityMarket(Commodity.Polymer, 6, -8),
-			new CommodityMarket(Commodity.Isotope, 10, -8),
-			new CommodityMarket(Commodity.Food, 15, -9), 
-			new CommodityMarket(Commodity.Component, 18, -10)
-		};
-
-		private static readonly StarSystem SigmaDraconis = new StarSystem(StarSystemType.SigmaDraconis, new[] { Commodity.Isotope, Commodity.Food })
-		{
-			new CommodityMarket(Commodity.Polymer, 8, -5),
-			new CommodityMarket(Commodity.Isotope, 4, -1),
-			new CommodityMarket(Commodity.Food, 10, -3),
-			new CommodityMarket(Commodity.Component, 14, -8)
-		};
-
-		private static readonly StarSystem MuHerculis = new StarSystem(StarSystemType.MuHerculis, new[] { Commodity.Component })
-		{
-			new CommodityMarket(Commodity.Polymer, 8, -9),
-			new CommodityMarket(Commodity.Isotope, 11, 1),
-			new CommodityMarket(Commodity.Component, 12, -4)
-		};
-
 		private readonly string m_name;
 		private readonly StarSystemAttribute m_type;
 		private readonly IEnumerable<Commodity> m_allowedProduction;
@@ -99,54 +55,18 @@
 		private readonly Dictionary<Player, List<Factory>> m_factories = new Dictionary<Player, List<Factory>>();
 		private readonly Dictionary<StarSystem, int> m_hyperJumpSuccessChance = new Dictionary<StarSystem, int>();
 
-		static StarSystem()
-		{
-			// TODO - convert to modifier table?
-			GammaLeporis.HyperJumpSuccessChance[EpsilonEridani] = 6;
-			GammaLeporis.HyperJumpSuccessChance[TauCeti] = 5;
-			GammaLeporis.HyperJumpSuccessChance[BetaHydri] = 5;
-			GammaLeporis.HyperJumpSuccessChance[SigmaDraconis] = 4;
-			GammaLeporis.HyperJumpSuccessChance[MuHerculis] = 2;
-
-			EpsilonEridani.HyperJumpSuccessChance[GammaLeporis] = 7;
-			EpsilonEridani.HyperJumpSuccessChance[TauCeti] = 9;
-			EpsilonEridani.HyperJumpSuccessChance[BetaHydri] = 8;
-			EpsilonEridani.HyperJumpSuccessChance[SigmaDraconis] = 7;
-			EpsilonEridani.HyperJumpSuccessChance[MuHerculis] = 6;
-
-			TauCeti.HyperJumpSuccessChance[GammaLeporis] = 7;
-			TauCeti.HyperJumpSuccessChance[EpsilonEridani] = 9;
-			TauCeti.HyperJumpSuccessChance[BetaHydri] = 8;
-			TauCeti.HyperJumpSuccessChance[SigmaDraconis] = 7;
-			TauCeti.HyperJumpSuccessChance[MuHerculis] = 6;
-
-			BetaHydri.HyperJumpSuccessChance[GammaLeporis] = 7;
-			BetaHydri.HyperJumpSuccessChance[EpsilonEridani] = 8;
-			BetaHydri.HyperJumpSuccessChance[TauCeti] = 8;
-			BetaHydri.HyperJumpSuccessChance[SigmaDraconis] = 6;
-			BetaHydri.HyperJumpSuccessChance[MuHerculis] = 6;
-
-			SigmaDraconis.HyperJumpSuccessChance[GammaLeporis] = 4;
-			SigmaDraconis.HyperJumpSuccessChance[EpsilonEridani] = 5;
-			SigmaDraconis.HyperJumpSuccessChance[TauCeti] = 5;
-			SigmaDraconis.HyperJumpSuccessChance[BetaHydri] = 4;
-			SigmaDraconis.HyperJumpSuccessChance[MuHerculis] = 6;
-
-			MuHerculis.HyperJumpSuccessChance[GammaLeporis] = 2;
-			MuHerculis.HyperJumpSuccessChance[EpsilonEridani] = 4;
-			MuHerculis.HyperJumpSuccessChance[TauCeti] = 4;
-			MuHerculis.HyperJumpSuccessChance[BetaHydri] = 3;
-			MuHerculis.HyperJumpSuccessChance[SigmaDraconis] = 5;
-		}
-
-		public StarSystem(StarSystemType type, IEnumerable<Commodity> allowedProduction)
+        public StarSystem(StarSystemType type, IEnumerable<Commodity> allowedProduction, IEnumerable<CommodityMarket> markets)
 		{
 			m_name = type.ToString();
 			m_type = StarSystemAttribute.GetAttibute(type);
 			m_allowedProduction = allowedProduction;
 
-			Game.StarSystems[type] = this;
-		}
+		    foreach (var market in markets)
+		    {
+		        market.System = this;
+		        m_markets[market.Commodity] = market;
+		    }
+	    }
 
 		public string Name
 		{
@@ -193,17 +113,6 @@
 		public IEnumerator GetEnumerator()
 		{
 			return ((IEnumerable<CommodityMarket>)this).GetEnumerator();
-		}
-
-		private void Add(CommodityMarket market)
-		{
-			market.System = this;
-			m_markets[market.Commodity] = market;
-		}
-
-		public static void Initialize()
-		{
-			// dummy method to trigger static initialization
 		}
 
 		public override int GetHashCode()

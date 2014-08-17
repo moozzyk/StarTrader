@@ -4,8 +4,14 @@
 
 	public class BiddingStage
 	{
+	    private readonly Game m_game;
 		private readonly Dictionary<Player, int> m_initiativeBids = new Dictionary<Player, int>();
 		private readonly List<Transaction> m_commodityBids = new List<Transaction>();
+
+	    public BiddingStage(Game game)
+	    {
+	        m_game = game;
+	    }
 
 		public void InitiativeBid(Player player, int bid)
 		{
@@ -19,7 +25,7 @@
 
 		public InitiativeStage NextStage()
 		{
-			return new InitiativeStage(m_initiativeBids, m_commodityBids);
+			return new InitiativeStage(m_game, m_initiativeBids, m_commodityBids);
 		}
 	}
 }

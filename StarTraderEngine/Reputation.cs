@@ -5,23 +5,22 @@
 	public class Reputation
 	{
 		private const int Max = 40;
-		private const int Initial = 20;
 
-		public Reputation(int political, int economic, int criminal)
+		public Reputation(int reputation, int political, int economic, int criminal)
 		{
-			Current = Initial;
+			Current = reputation;
 			PoliticalTies = political;
 			EconomicTies = economic;
 			CriminalTies = criminal;
 		}
 
-		public int Current { get; private set; }
+		public int Current { get; set; }
 
-		public int PoliticalTies { get; private set; }
+		public int PoliticalTies { get; set; }
 		
-		public int EconomicTies { get; private set; }
+		public int EconomicTies { get; set; }
 		
-		public int CriminalTies { get; private set; }
+		public int CriminalTies { get; set; }
 
 		/// <summary>
 		/// Called during Control Stage
@@ -67,7 +66,7 @@
 
 			if (Current >= 1 && Current <= 19)
 			{
-				Current = Math.Min(Current + 3, Initial);
+				Current = Math.Min(Current + 3, 20);
 			}
 
 			return bonus;

@@ -1,19 +1,38 @@
 ﻿namespace StarTrader
 {
-	using System.Collections.Generic;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
 
-	public static class Game
-	{
-		public static Scenario Scenario;
-		public static readonly Dictionary<StarSystemType, StarSystem> StarSystems = new Dictionary<StarSystemType, StarSystem>();
+    public class Game
+    {
+        public readonly Dictionary<StarSystemType, StarSystem> StarSystems;
 
-		static Game()
-		{
-			// TODO
-			Scenario = Scenario.FreeTrade;
-			StarSystem.Initialize();
-		}
+        public Game()
+        {
+            Turn = -1;
+            StarSystems = StarSystemFactory.CreateStarSystems();
+        }
 
-		public static List<Player> Players { get; set; }
-	}
+        public void Initialize(string[] playerNames, Scenario scenario)
+        {
+            Debug.Assert(playerNames != null && playerNames.Length > 0, "playerNames is null or empty");
+            Debug.Assert(scenario != null, "scenario is null");
+
+            if (Turn >= 0)
+            {
+                throw new InvalidOperationException("Game has already been initialized.");
+            }
+
+            Turn = 0;
+            Players = scenario.CreatePlayers(playerNames).ToList();
+
+            // TOOD: total initial ties
+        }
+
+        public int Turn { get; private set; }
+
+        public List<Player> Players { get; private set; }
+    }
 }
