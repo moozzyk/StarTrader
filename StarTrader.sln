@@ -8,6 +8,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarTraderEngineTest", "StarTraderEngineTest\StarTraderEngineTest.csproj", "{7359001D-E4BC-42A2-BADB-64B129164C64}"
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{0F7C9363-5735-40E5-8158-B3BD3F1CF520}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarTrader", "StarTrader\StarTrader.csproj", "{C52A91FB-9005-4924-9526-196FC1D55FEF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{0F7C9363-5735-40E5-8158-B3BD3F1CF520}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F7C9363-5735-40E5-8158-B3BD3F1CF520}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F7C9363-5735-40E5-8158-B3BD3F1CF520}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C52A91FB-9005-4924-9526-196FC1D55FEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C52A91FB-9005-4924-9526-196FC1D55FEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C52A91FB-9005-4924-9526-196FC1D55FEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C52A91FB-9005-4924-9526-196FC1D55FEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
