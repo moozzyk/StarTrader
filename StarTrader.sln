@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarTraderEngine", "StarTraderEngine\StarTraderEngine.csproj", "{F62080BB-9AB3-4853-B2D3-B6A5C6EF6CBB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarTraderEngineTest", "StarTraderEngineTest\StarTraderEngineTest.csproj", "{7359001D-E4BC-42A2-BADB-64B129164C64}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{F62080BB-9AB3-4853-B2D3-B6A5C6EF6CBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F62080BB-9AB3-4853-B2D3-B6A5C6EF6CBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F62080BB-9AB3-4853-B2D3-B6A5C6EF6CBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7359001D-E4BC-42A2-BADB-64B129164C64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7359001D-E4BC-42A2-BADB-64B129164C64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7359001D-E4BC-42A2-BADB-64B129164C64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7359001D-E4BC-42A2-BADB-64B129164C64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("StarTrader")]
+[assembly: AssemblyTitle("StarTraderEngineTest")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("StarTrader")]
+[assembly: AssemblyProduct("StarTraderEngineTest")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("83cd56c4-8529-472e-a264-52b320b3a8da")]
+[assembly: Guid("1214db5b-67b0-400b-92b2-bcd169585eb7")]
 
 // Version information for an assembly consists of the following four values:
 //
