@@ -12,11 +12,11 @@
 		private readonly Reputation m_reputation;
 		private readonly Dictionary<StarSystem, CommodityStorage> m_temporaryStorage = new Dictionary<StarSystem, CommodityStorage>();
 
-		public Player(string name, int political, int economic, int criminal)
+		public Player(string name, int cash, int reputation, int political, int economic, int criminal)
 		{
 			m_name = name;
-			Cash = Game.Scenario.StartingCash;
-			m_reputation = new Reputation(political, economic, criminal);
+			Cash = cash;
+			m_reputation = new Reputation(reputation, political, economic, criminal);
 		}
 
 		public string Name

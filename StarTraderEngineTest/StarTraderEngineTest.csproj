@@ -7,7 +7,7 @@
     <ProjectGuid>{7359001D-E4BC-42A2-BADB-64B129164C64}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StarTraderEngineTest</RootNamespace>
+    <RootNamespace>StarTrader</RootNamespace>
     <AssemblyName>StarTraderEngineTest</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.2.1408.0717\lib\net40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommodityStorageTest.cs" />
+    <Compile Include="FreeTradeScenarioTest.cs" />
+    <Compile Include="GameTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

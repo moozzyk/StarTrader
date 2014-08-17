@@ -15,6 +15,7 @@ namespace StarTrader
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
+            /*
 			Game.Players = new List<Player>();
 			var player1 = new Player("Player1", 3, 3, 3);
 			Game.Players.Add(player1);
@@ -41,6 +42,7 @@ namespace StarTrader
 
 			transactionStage.PerformTransactions(Game.StarSystems[StarSystemType.EpsilonEridani][Commodity.Isotope]);
 			transactionStage.PerformTransactions(Game.StarSystems[StarSystemType.EpsilonEridani][Commodity.Polymer]);
+             */
 		}
 	}
 }

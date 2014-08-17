@@ -7,18 +7,20 @@
 
 	class InitiativeStage
 	{
+	    private readonly Game m_game;
 		private readonly Dictionary<Player, int> m_initiativeBids;
 		private readonly List<Transaction> m_commodityBids;
 
-		public InitiativeStage(Dictionary<Player, int> initiativeBids, List<Transaction> commodityBids)
+		public InitiativeStage(Game game, Dictionary<Player, int> initiativeBids, List<Transaction> commodityBids)
 		{
+		    m_game = game;
 			m_initiativeBids = initiativeBids;
 			m_commodityBids = commodityBids;
 		}
 
 		public void SetInitiative()
 		{
-			foreach (var player in Game.Players)
+			foreach (var player in m_game.Players)
 			{
 				player.Initiative = 0;
 			}
@@ -28,7 +30,7 @@
 			do
 			{
 				retry = false;
-				var groups = Game.Players.GroupBy(player => player.Initiative);
+				var groups = m_game.Players.GroupBy(player => player.Initiative);
 				foreach (var grouping in groups.Where(grouping => grouping.Count() > 1))
 				{
 					// redo the dice
@@ -39,11 +41,12 @@
 			while (retry);
 
 			// order players by initiative
-			Game.Players = Game.Players.OrderBy(player => player.Initiative).ToList();
+            // TODO: this needs to be more explicit - the order may/will be lost when saved to DB
+            // m_game.Players = m_game.Players.OrderBy(player => player.Initiative).ToList();
 
 			// TODO - set the order from ui
 			int current = 0;
-			foreach (var player in Game.Players)
+			foreach (var player in m_game.Players)
 			{
 				player.Order = current++;
 			}
@@ -52,7 +55,7 @@
 		public TransactionStage NextStage()
 		{
 			// TEMP
-			return new TransactionStage(m_commodityBids);
+			return new TransactionStage(m_game, m_commodityBids);
 		}
 
 		private void SetInitiativeForPlayers(IEnumerable<Player> players)

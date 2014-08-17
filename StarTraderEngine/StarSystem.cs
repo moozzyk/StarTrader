@@ -3,8 +3,6 @@
 	using System;
 	using System.Collections;
 	using System.Collections.Generic;
-	using System.ComponentModel;
-	using System.Linq;
 
 	public class StarSystemAttribute : Attribute
 	{
@@ -145,7 +143,8 @@
 			m_type = StarSystemAttribute.GetAttibute(type);
 			m_allowedProduction = allowedProduction;
 
-			Game.StarSystems[type] = this;
+            // TODO: 
+            //Game.StarSystems[type] = this;
 		}
 
 		public string Name

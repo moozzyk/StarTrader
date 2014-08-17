@@ -5,10 +5,12 @@
 
 	class TransactionStage
 	{
+	    private readonly Game m_game;
 		private readonly List<Transaction> m_commodityBids;
 
-		public TransactionStage(List<Transaction> commodityBids)
+		public TransactionStage(Game game, List<Transaction> commodityBids)
 		{
+		    m_game = game;
 			m_commodityBids = commodityBids;
 		}
 
@@ -21,9 +23,9 @@
 		{
 			// any bought commodities not moved to actual storage are forfeit
 			var devnull = new CommodityStorage { Size = int.MaxValue };
-			foreach (var player in Game.Players)
+			foreach (var player in m_game.Players)
 			{
-				foreach (var system in Game.StarSystems.Values)
+				foreach (var system in m_game.StarSystems.Values)
 				{
 					foreach (CommodityMarket market in system)
 					{

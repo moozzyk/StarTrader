@@ -5,11 +5,10 @@
 	public class Reputation
 	{
 		private const int Max = 40;
-		private const int Initial = 20;
 
-		public Reputation(int political, int economic, int criminal)
+		public Reputation(int reputation, int political, int economic, int criminal)
 		{
-			Current = Initial;
+			Current = reputation;
 			PoliticalTies = political;
 			EconomicTies = economic;
 			CriminalTies = criminal;
@@ -67,7 +66,7 @@
 
 			if (Current >= 1 && Current <= 19)
 			{
-				Current = Math.Min(Current + 3, Initial);
+				Current = Math.Min(Current + 3, 20);
 			}
 
 			return bonus;
