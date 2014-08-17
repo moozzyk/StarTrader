@@ -1,17 +1,18 @@
-﻿
-namespace StarTrader
+﻿namespace StarTraderTest
 {
-    using Xunit;
+	using StarTrader;
 
-    public class CommodityStorageTest
-    {
-        [Fact]
-        public void Can_get_set_size()
-        {
-            var commodity = new CommodityStorage { Size = 5 };
+	using Xunit;
 
-            Assert.Equal(5, commodity.Size);
-            
-        }
-    }
+	public class CommodityStorageTest
+	{
+		[Fact]
+		public void Can_get_set_size()
+		{
+			var commodity = new CommodityStorage { Size = 5 };
+
+			Assert.Equal(5, commodity.Size);
+
+		}
+	}
 }

@@ -2,7 +2,7 @@
 {
 	using System.Collections.Generic;
 
-	class Scenario
+	public class Scenario
 	{
 		public static readonly Scenario FreeTrade = new Scenario
 		{

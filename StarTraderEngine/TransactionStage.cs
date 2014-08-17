@@ -3,7 +3,7 @@
 	using System.Collections.Generic;
 	using System.Linq;
 
-	class TransactionStage
+	public class TransactionStage
 	{
 		private readonly List<Transaction> m_commodityBids;
 
