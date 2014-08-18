@@ -25,19 +25,19 @@ namespace StarTrader
             var player3 = game.Players[2];
             var player4 = game.Players[3];
 /*
-            player1.Reputation.PoliticalTies = 3;
+            player1.Reputation.PoliticalConnections = 3;
             player1.Reputation.EconomicTies = 3;
             player1.Reputation.CriminalTies = 3;
 
-            player2.Reputation.PoliticalTies = 5;
+            player2.Reputation.PoliticalConnections = 5;
             player2.Reputation.EconomicTies = 3;
             player2.Reputation.CriminalTies = 1;
 
-            player3.Reputation.PoliticalTies = 4;
+            player3.Reputation.PoliticalConnections = 4;
             player3.Reputation.EconomicTies = 4;
             player3.Reputation.CriminalTies = 1;
 
-            player4.Reputation.PoliticalTies = 4;
+            player4.Reputation.PoliticalConnections = 4;
             player4.Reputation.EconomicTies = 4;
             player4.Reputation.CriminalTies = 1;
 			*/

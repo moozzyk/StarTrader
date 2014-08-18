@@ -1,7 +1,5 @@
-﻿namespace StarTraderTest
+﻿namespace StarTrader
 {
-	using StarTrader;
-
 	using Xunit;
 
 	public class CommodityStorageTest

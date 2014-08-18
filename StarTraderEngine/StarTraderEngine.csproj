@@ -54,6 +54,7 @@
     <Compile Include="Commodity.cs" />
     <Compile Include="CommodityMarket.cs" />
     <Compile Include="CommodityStorage.cs" />
+    <Compile Include="Connections.cs" />
     <Compile Include="CrewClass.cs" />
     <Compile Include="Dice.cs" />
     <Compile Include="Factory.cs" />

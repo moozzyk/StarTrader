@@ -1,8 +1,7 @@
-﻿namespace StarTraderTest
+﻿namespace StarTrader
 {
+	using Moq;
 	using Xunit;
-
-	using StarTrader;
 
 	public class CommodityMarketTest
 	{
@@ -10,7 +9,9 @@
 		public void PerformTransactions_MultipleOffers_Execute()
 		{
 			// arrange
-			Dice.SetTestingInstance(new DiceFake(10));
+			var mockDice = new Mock<IDice>();
+			mockDice.Setup(d => d.Roll()).Returns(10);
+			Dice.SetTestingInstance(mockDice.Object);
 			var playerA = new Player("a", 300, 20, 1, 1, 1);
 			var playerB = new Player("b", 300, 20, 1, 1, 1);
 			var playerC = new Player("c", 300, 20, 1, 1, 1);
@@ -47,7 +48,9 @@
 		public void PerformTransactions_MultipleOffers_InitiativeWins()
 		{
 			// arrange
-			Dice.SetTestingInstance(new DiceFake(10));
+			var mockDice = new Mock<IDice>();
+			mockDice.Setup(d => d.Roll()).Returns(10);
+			Dice.SetTestingInstance(mockDice.Object);
 			var playerA = new Player("a", 300, 20, 1, 1, 1);
 			var playerB = new Player("b", 300, 20, 1, 1, 1);
 			playerA.Initiative = 100;
@@ -74,26 +77,6 @@
 
 			// after 2 buys the price goes up
 			Assert.Equal(16, componentMarket.Price);
-		}
-
-		private class DiceFake : IDice
-		{
-			private readonly int m_result;
-
-			public DiceFake(int result)
-			{
-				m_result = result;
-			}
-
-			public int Roll()
-			{
-				return m_result;
-			}
-
-			public int Roll1Die()
-			{
-				return m_result;
-			}
 		}
 	}
 }

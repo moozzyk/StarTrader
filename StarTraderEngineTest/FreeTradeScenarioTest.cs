@@ -14,9 +14,9 @@
 			Assert.Equal(2, players.Length);
 			Assert.True(players.All(p => p.Cash == 300));
 			Assert.True(players.All(p => p.Reputation.Current == 20));
-			Assert.True(players.All(p => p.Reputation.CriminalTies == -1));
-			Assert.True(players.All(p => p.Reputation.EconomicTies == -1));
-			Assert.True(players.All(p => p.Reputation.PoliticalTies == -1));
+			Assert.True(players.All(p => p.Reputation.CriminalTies.Current == -1));
+			Assert.True(players.All(p => p.Reputation.EconomicTies.Current == -1));
+			Assert.True(players.All(p => p.Reputation.PoliticalConnections.Current == -1));
 		}
 	}
 }

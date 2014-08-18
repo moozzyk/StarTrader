@@ -25,7 +25,7 @@
 			get { return StoragePerUnit * Size; }
 		}
 
-		virtual public int AvailableCapacity
+		public virtual int AvailableCapacity
 		{
 			get
 			{
@@ -40,7 +40,7 @@
 			get { return 10; }
 		}
 
-		virtual public int GetCount(Commodity commodity)
+		public virtual  int GetCount(Commodity commodity)
 		{
 			return m_storage[commodity];
 		}
@@ -48,7 +48,7 @@
 		/// <summary>
 		/// Stores as much as possible, and returns the quantity actually stored
 		/// </summary>
-		virtual public int Store(Commodity commodity, int quantity)
+		public virtual int Store(Commodity commodity, int quantity)
 		{
 			int actuallyStored = commodity.RequiredCapacity() == 0 ? quantity : Math.Min(quantity, AvailableCapacity / commodity.RequiredCapacity());
 
@@ -57,7 +57,7 @@
 			return actuallyStored;
 		}
 
-		virtual public int Remove(Commodity commodity, int quantity)
+		public virtual int Remove(Commodity commodity, int quantity)
 		{
 			int actuallyRemoved = Math.Min(quantity, m_storage[commodity]);
 			m_storage[commodity] -= actuallyRemoved;

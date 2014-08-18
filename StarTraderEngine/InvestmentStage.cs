@@ -8,10 +8,5 @@
 		{
 			return player.BuyWarehouse(system, capacity);
 		}
-
-		public void IncrementTies(Player player, Ties type)
-		{
-			player.Reputation.BuyTies(type, player);
-		}
 	}
 }

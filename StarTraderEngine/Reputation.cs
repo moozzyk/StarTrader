@@ -1,79 +1,44 @@
-﻿using System.Diagnostics;
-
-namespace StarTrader
+﻿namespace StarTrader
 {
 	using System;
-
-	public enum Ties : int
-	{
-		Political,
-		Economic,
-		Criminal
-	}
 
 	public class Reputation
 	{
 		private const int Max = 40;
-		private const int MaxTies = 10;
-		private const int TiesIncrementCost = 10;
 
-		private readonly int[] m_ties = new int[3];
+		private readonly Connections m_political;
+		private readonly Connections m_economic;
+		private readonly Connections m_criminal;
 
 		public Reputation(int reputation, int political, int economic, int criminal)
 		{
 			Current = reputation;
-			m_ties[(int)Ties.Political] = political;
-			m_ties[(int)Ties.Economic] = economic;
-			m_ties[(int)Ties.Criminal] = criminal;
+			m_political = new Connections.Political(political);
+			m_economic = new Connections.Economic(economic);
+			m_criminal = new Connections.Criminal(criminal);
 		}
 
 		public int Current { get; private set; }
 
-		public int PoliticalTies
+		public Connections PoliticalConnections
 		{
-			get { return GetTies(Ties.Political); }
+			get { return m_political; }
 		}
 
-		public int EconomicTies
+		public Connections EconomicTies
 		{
-			get { return GetTies(Ties.Economic); }
+			get { return m_economic; }
 		}
 
-		public int CriminalTies
+		public Connections CriminalTies
 		{
-			get { return GetTies(Ties.Criminal); }
+			get { return m_criminal; }
 		}
 
-		public int BuyTies(Ties type, Player player)
+		public void AdjustReputation(int adjustment)
 		{
-			int current = GetTies(type);
-			if (current < MaxTies && player.Cash > TiesIncrementCost * (current + 1))
-			{
-				current++;
-				SetTies(type, current);
-				player.Cash -= TiesIncrementCost * current;
-
-				int reputationAdjustment = 0;
-				switch (type)
-				{
-					case Ties.Political:
-						reputationAdjustment = 1;
-						break;
-					case Ties.Economic:
-						reputationAdjustment = 2;
-						break;
-					case Ties.Criminal:
-						reputationAdjustment = -1;
-						break;
-					default:
-						Debug.Assert(false);
-						break;
-				}
-
-				Current = Math.Max(1, Math.Min(Max, Current + reputationAdjustment));
-			}
-
-			return current;
+			// TODO - reconsider this method when control stage is implemented
+			Current = Math.Max(1, Math.Min(Max, Current + adjustment));
 		}
 
 		/// <summary>
@@ -124,16 +89,6 @@ namespace StarTrader
 			}
 
 			player.Cash += bonus;
-		}
-
-		private int GetTies(Ties type)
-		{
-			return m_ties[(int)type];
-		}
-
-		private void SetTies(Ties type, int value)
-		{
-			m_ties[(int)type] = value;
 		}
 	}
 }

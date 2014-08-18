@@ -11,21 +11,21 @@
 
 	public static class Dice
 	{
-		private static IDice m_instance = new DiceImpl();
-
-		public static void SetTestingInstance(IDice dice)
-		{
-			m_instance = dice;
-		}
+		private static IDice s_instance = new DiceImpl();
 
 		public static int Roll()
 		{
-			return m_instance.Roll();
+			return s_instance.Roll();
 		}
 
 		public static int Roll1Die()
 		{
-			return m_instance.Roll1Die();
+			return s_instance.Roll1Die();
+		}
+
+		internal static void SetTestingInstance(IDice dice)
+		{
+			s_instance = dice;
 		}
 
 		private class DiceImpl : IDice
