@@ -5,7 +5,7 @@
 	public class CommodityStorageTest
 	{
 		[Fact]
-		public void Can_get_set_size()
+		public void Size_Any_CangGetSet()
 		{
 			var commodity = new CommodityStorage { Size = 5 };
 
