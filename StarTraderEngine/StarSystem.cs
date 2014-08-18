@@ -98,7 +98,7 @@
 			if (!m_warehouses.ContainsKey(player))
 			{
 				// return empty
-				return new Warehouse(player);
+				m_warehouses[player] = new Warehouse(player);
 			}
 
 			return m_warehouses[player];

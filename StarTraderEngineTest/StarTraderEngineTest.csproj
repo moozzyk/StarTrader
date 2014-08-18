@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommodityMarketTest.cs" />
     <Compile Include="CommodityStorageTest.cs" />
     <Compile Include="FreeTradeScenarioTest.cs" />
     <Compile Include="GameTest.cs" />

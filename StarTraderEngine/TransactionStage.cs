@@ -22,7 +22,7 @@
 		 public InvestmentStage NextStage()
 		 {
 			 // any bought commodities not moved to actual storage are forfeit
-			 var devnull = new CommodityStorage { Size = int.MaxValue };
+			 var devnull = new InfiniteStorage();
 			 foreach (var player in m_game.Players)
 			 {
 				 foreach (var system in m_game.StarSystems.Values)

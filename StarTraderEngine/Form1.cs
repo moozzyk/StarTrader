@@ -24,7 +24,7 @@ namespace StarTrader
             var player2 = game.Players[1];
             var player3 = game.Players[2];
             var player4 = game.Players[3];
-
+/*
             player1.Reputation.PoliticalTies = 3;
             player1.Reputation.EconomicTies = 3;
             player1.Reputation.CriminalTies = 3;
@@ -40,7 +40,7 @@ namespace StarTrader
             player4.Reputation.PoliticalTies = 4;
             player4.Reputation.EconomicTies = 4;
             player4.Reputation.CriminalTies = 1;
-
+			*/
 
 			var biddingStage = new BiddingStage(game);
 			biddingStage.InitiativeBid(player1, 20);

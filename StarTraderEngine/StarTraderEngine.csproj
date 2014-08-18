@@ -67,6 +67,7 @@
     <Compile Include="Game.cs" />
     <Compile Include="GameEvent.cs" />
     <Compile Include="HullType.cs" />
+    <Compile Include="InfiniteStorage.cs" />
     <Compile Include="InitiativeStage.cs" />
     <Compile Include="InvestmentStage.cs" />
     <Compile Include="Player.cs" />

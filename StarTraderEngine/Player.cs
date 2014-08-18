@@ -63,7 +63,7 @@
 		public int BuyWarehouse(StarSystem system, int capacity)
 		{
 			var warehouse = system.GetWarehouse(this);
-			int actualCapacity = Math.Min(capacity, Cash / (capacity * Warehouse.Price));
+			int actualCapacity = Math.Min(capacity, Cash / Warehouse.Price);
 			warehouse.Size += actualCapacity;
 			Cash -= actualCapacity * Warehouse.Price;
 			return actualCapacity;
@@ -105,7 +105,7 @@
 			if (!m_temporaryStorage.ContainsKey(system))
 			{
 				// no limits on temporary storage
-				m_temporaryStorage[system] = new CommodityStorage { Size = int.MaxValue };
+				m_temporaryStorage[system] = new InfiniteStorage();
 			}
 
 			m_temporaryStorage[system].Store(commodity, canBuy);

@@ -1,32 +1,86 @@
-﻿namespace StarTrader
+﻿using System.Diagnostics;
+
+namespace StarTrader
 {
 	using System;
+
+	public enum Ties : int
+	{
+		Political,
+		Economic,
+		Criminal
+	}
 
 	public class Reputation
 	{
 		private const int Max = 40;
+		private const int MaxTies = 10;
+		private const int TiesIncrementCost = 10;
+
+		private readonly int[] m_ties = new int[3];
 
 		public Reputation(int reputation, int political, int economic, int criminal)
 		{
 			Current = reputation;
-			PoliticalTies = political;
-			EconomicTies = economic;
-			CriminalTies = criminal;
+			m_ties[(int)Ties.Political] = political;
+			m_ties[(int)Ties.Economic] = economic;
+			m_ties[(int)Ties.Criminal] = criminal;
 		}
 
-		public int Current { get; set; }
+		public int Current { get; private set; }
 
-		public int PoliticalTies { get; set; }
-		
-		public int EconomicTies { get; set; }
-		
-		public int CriminalTies { get; set; }
+		public int PoliticalTies
+		{
+			get { return GetTies(Ties.Political); }
+		}
+
+		public int EconomicTies
+		{
+			get { return GetTies(Ties.Economic); }
+		}
+
+		public int CriminalTies
+		{
+			get { return GetTies(Ties.Criminal); }
+		}
+
+		public int BuyTies(Ties type, Player player)
+		{
+			int current = GetTies(type);
+			if (current < MaxTies && player.Cash > TiesIncrementCost * (current + 1))
+			{
+				current++;
+				SetTies(type, current);
+				player.Cash -= TiesIncrementCost * current;
+
+				int reputationAdjustment = 0;
+				switch (type)
+				{
+					case Ties.Political:
+						reputationAdjustment = 1;
+						break;
+					case Ties.Economic:
+						reputationAdjustment = 2;
+						break;
+					case Ties.Criminal:
+						reputationAdjustment = -1;
+						break;
+					default:
+						Debug.Assert(false);
+						break;
+				}
+
+				Current = Math.Max(1, Math.Min(Max, Current + reputationAdjustment));
+			}
+
+			return current;
+		}
 
 		/// <summary>
 		/// Called during Control Stage
 		/// </summary>
 		/// <returns>Cash bonus, if any</returns>
-		public int Adjust()
+		public void Adjust(Player player)
 		{
 			int bonus = 0;
 
@@ -69,7 +123,17 @@
 				Current = Math.Min(Current + 3, 20);
 			}
 
-			return bonus;
+			player.Cash += bonus;
+		}
+
+		private int GetTies(Ties type)
+		{
+			return m_ties[(int)type];
+		}
+
+		private void SetTies(Ties type, int value)
+		{
+			m_ties[(int)type] = value;
 		}
 	}
 }
