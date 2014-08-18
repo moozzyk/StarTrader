@@ -21,7 +21,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <InternalsVisibleToEnabled Condition=" $(InternalsVisibleToEnabled) == ''">true</InternalsVisibleToEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,9 +30,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <DefineConstants Condition=" '$(InternalsVisibleToEnabled)' == 'true'">$(DefineConstants);INTERNALSVISIBLETOENABLED</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

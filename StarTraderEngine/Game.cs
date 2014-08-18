@@ -28,11 +28,12 @@
 	        Turn = 0;
 	        Players = scenario.CreatePlayers(playerNames).ToList();
 
-            // TOOD: total initial ties
+            // TOOD: total initial ties or maybe initialize players outside before initializing the game
 	    }
 
 	    public int Turn { get; private set; }
 
-	    public List<Player> Players { get; private set; }
+        // TODO: eventually players should not be settable from outside
+	    public List<Player> Players { get; internal set; }
 	}
 }
