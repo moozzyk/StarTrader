@@ -55,18 +55,18 @@
 		private readonly Dictionary<Player, List<Factory>> m_factories = new Dictionary<Player, List<Factory>>();
 		private readonly Dictionary<StarSystem, int> m_hyperJumpSuccessChance = new Dictionary<StarSystem, int>();
 
-        public StarSystem(StarSystemType type, IEnumerable<Commodity> allowedProduction, IEnumerable<CommodityMarket> markets)
+		public StarSystem(StarSystemType type, IEnumerable<Commodity> allowedProduction, IEnumerable<CommodityMarket> markets)
 		{
 			m_name = type.ToString();
 			m_type = StarSystemAttribute.GetAttibute(type);
 			m_allowedProduction = allowedProduction;
 
-		    foreach (var market in markets)
-		    {
-		        market.System = this;
-		        m_markets[market.Commodity] = market;
-		    }
-	    }
+			foreach (var market in markets)
+			{
+				market.System = this;
+				m_markets[market.Commodity] = market;
+			}
+		}
 
 		public string Name
 		{

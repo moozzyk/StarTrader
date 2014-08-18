@@ -34,5 +34,7 @@
 		public int Turn { get; private set; }
 
 		public List<Player> Players { get; private set; }
+
+		public IEnumerable<Player> PlayersByInitiative { get { return Players.OrderByDescending(player => player.Initiative); } }
 	}
 }

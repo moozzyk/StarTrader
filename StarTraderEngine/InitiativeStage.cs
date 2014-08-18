@@ -40,10 +40,6 @@ namespace StarTrader
 			}
 			while (retry);
 
-			// order players by initiative
-			// TODO: this needs to be more explicit - the order may/will be lost when saved to DB
-			// m_game.Players = m_game.Players.OrderBy(player => player.Initiative).ToList();
-
 			// TODO - set the order from ui
 			int current = 0;
 			foreach (var player in m_game.Players)
