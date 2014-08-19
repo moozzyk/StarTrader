@@ -49,6 +49,7 @@
     <Compile Include="CommodityStorageTest.cs" />
     <Compile Include="FreeTradeScenarioTest.cs" />
     <Compile Include="GameTest.cs" />
+    <Compile Include="InitiativeStageTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

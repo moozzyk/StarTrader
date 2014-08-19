@@ -34,6 +34,16 @@
 			return false;
 		}
 
+		public static bool operator >= (Connections connections1, Connections connections2)
+		{
+			return connections1.m_type == connections2.m_type && connections1.Current >= connections2.Current;
+		}
+
+		public static bool operator <= (Connections connections1, Connections connections2)
+		{
+			return connections1.m_type == connections2.m_type && connections1.Current <= connections2.Current;
+		}
+
 		protected abstract void AdjustReputation(Reputation reputation);
 
 		public class Political : Connections

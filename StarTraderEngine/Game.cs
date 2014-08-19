@@ -8,11 +8,15 @@
 	public class Game
 	{
 		public readonly Dictionary<StarSystemType, StarSystem> StarSystems;
+		public readonly List<GameEvent> CurrentEvents;
+		public readonly List<GameEvent> AvailableEvents; 
 
 		public Game()
 		{
 			Turn = -1;
 			StarSystems = StarSystemFactory.CreateStarSystems();
+			CurrentEvents = new List<GameEvent>();
+			AvailableEvents = GameEvent.AllEvents.ToList();
 		}
 
 		public void Initialize(string[] playerNames, Scenario scenario)

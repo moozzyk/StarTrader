@@ -35,6 +35,11 @@
 			get { return m_criminal; }
 		}
 
+		public bool MeetsRequirements(Connections requiredConnections)
+		{
+			return m_political >= requiredConnections || m_economic >= requiredConnections || m_criminal >= requiredConnections;
+		}
+
 		public void AdjustReputation(int adjustment)
 		{
 			// TODO - reconsider this method when control stage is implemented

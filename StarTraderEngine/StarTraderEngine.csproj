@@ -57,13 +57,8 @@
     <Compile Include="Connections.cs" />
     <Compile Include="CrewClass.cs" />
     <Compile Include="Dice.cs" />
+    <Compile Include="EventStage.cs" />
     <Compile Include="Factory.cs" />
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="FreeTradeScenario.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameEvent.cs" />

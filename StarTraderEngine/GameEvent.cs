@@ -1,15 +1,94 @@
-﻿namespace StarTrader
+﻿using System.Diagnostics;
+
+namespace StarTrader
 {
 	public class GameEvent
 	{
-		public GameEvent(int turn, Connections requiredConnections, bool reusable, string description)
-		{
+		private const int Price = 5;
 
+		private readonly int m_delay;
+		private readonly Connections m_requiredConnections;
+		private readonly bool m_reusable;
+		private readonly string m_description;
+
+		private int m_turnToActivate;
+
+		public GameEvent(int delay, Connections requiredConnections, bool reusable, string description)
+		{
+			m_delay = delay;
+			m_requiredConnections = requiredConnections;
+			m_reusable = reusable;
+			m_description = description;
 		}
 
-		public int Stage { get; set; }
+		public Connections RequiredConnections
+		{
+			get { return m_requiredConnections; }
+		}
 
-		private static readonly GameEvent[] Events = new[]
+		public bool Deactivate(Game game)
+		{
+			if (m_turnToActivate < game.Turn)
+			{
+				Debug.Assert(game.CurrentEvents.Contains(this));
+				Debug.Assert(!game.AvailableEvents.Contains(this));
+				game.CurrentEvents.Remove(this);
+				if (m_reusable)
+				{
+					game.AvailableEvents.Add(this);
+				}
+
+				m_turnToActivate = 0;
+				return true;
+			}
+
+			return false;
+		}
+
+		/// <summary>
+		/// Called during the event phase
+		/// </summary>
+		public bool Activate(Game game)
+		{
+			if (m_turnToActivate == game.Turn)
+			{
+				// do stuff
+				return true;
+			}
+
+			return false;
+		}
+
+		/// <summary>
+		/// Invoked when the event is drawn from the pool
+		/// </summary>
+		public void Draw(Game game)
+		{
+			Debug.Assert(m_turnToActivate == 0);
+			Debug.Assert(!game.CurrentEvents.Contains(this));
+			Debug.Assert(game.AvailableEvents.Contains(this));
+			m_turnToActivate = game.Turn + m_delay;
+			game.CurrentEvents.Add(this);
+			game.AvailableEvents.Remove(this);
+		}
+
+		public bool Reveal(Player player)
+		{
+			if (player.Cash < Price)
+			{
+				return false;
+			}
+
+			if (!player.Reputation.MeetsRequirements(RequiredConnections))
+			{
+				return false;
+			}
+
+			player.Cash -= Price;
+			return true;
+		}
+
+		public static readonly GameEvent[] AllEvents =
 		{
 			// Opportunities
 			new GameEvent(3, new Connections.Criminal(4), true, "Slaves"), // Buy(1) Mu Herculis, sell Epsilon Eridani.
@@ -27,8 +106,8 @@
 			new GameEvent(1, new Connections.Criminal(10), true,  "Hull Javelin"), // Hull Javels and/or 5 black market modules. Available in Beta Hydri.
 			new GameEvent(4, new Connections.Criminal(8), true,  "Black market modules" ), // One each type. Available on Tau Ceti.
 			new GameEvent(2, new Connections.Political(2), true, "Research expedition"), // Organized by independent corporation. Player can send 1 legal ship. 
-							// Roll 1D and move the ship to the turn ahead by the number rolled - that's the turn when the ship returns. if rolled 1, the ship is destroyed.
-							// After the return roll 2D and multiple by 50 for the reward
+			// Roll 1D and move the ship to the turn ahead by the number rolled - that's the turn when the ship returns. if rolled 1, the ship is destroyed.
+			// After the return roll 2D and multiple by 50 for the reward
 			new GameEvent(4, new Connections.Economic(3), true, "Hull Dagger"), // Hull Dagger and/or 1 black market module. Available on Tau Ceti.
 			new GameEvent(3, new Connections.Economic(8), true, "Weapons"), // Buy(8) Epsilon Eridani, sell Gamma Leporis.
 			new GameEvent(2, new Connections.Economic(2), true, "Weapons"), // Buy(3) Beta Hydri, sell Gamma Leporis.
