@@ -16,7 +16,7 @@
 			Turn = -1;
 			StarSystems = StarSystemFactory.CreateStarSystems();
 			CurrentEvents = new List<GameEvent>();
-			AvailableEvents = GameEvent.AllEvents.ToList();
+			AvailableEvents = GameEventFactory.CreateEvents();
 		}
 
 		public void Initialize(string[] playerNames, Scenario scenario)
