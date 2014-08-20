@@ -1,64 +1,67 @@
 namespace StarTrader
 {
-	using System;
+    using System;
 
-	public class CommodityDescriptorAttribute : Attribute
-	{
-		public int RequiredCapacity { get; set; }
+    public class CommodityDescriptorAttribute : Attribute
+    {
+        public int RequiredCapacity { get; set; }
 
-		public bool BlackMarket { get; set; }
+        public bool BlackMarket { get; set; }
 
-		public bool RequiresLifeSupport { get; set; }
-	}
+        public bool RequiresLifeSupport { get; set; }
+    }
 
-	public enum Commodity
-	{
-		[CommodityDescriptor(RequiredCapacity = 1)]
-		Polymer,
+    public enum Commodity
+    {
+        [CommodityDescriptor(RequiredCapacity = 1)]
+        Polymer,
 
-		[CommodityDescriptor(RequiredCapacity = 1)]
-		Isotope,
+        [CommodityDescriptor(RequiredCapacity = 1)]
+        Isotope,
 
-		[CommodityDescriptor]
-		Component,
+        [CommodityDescriptor]
+        Component,
 
-		[CommodityDescriptor]
-		Food,
+        [CommodityDescriptor]
+        Food,
 
-		[CommodityDescriptor(BlackMarket = true)]
-		Drugs,
+        [CommodityDescriptor(BlackMarket = true)]
+        Drugs,
 
-		[CommodityDescriptor(RequiredCapacity = 1, BlackMarket = true)]
-		Weapons,
+        [CommodityDescriptor(RequiredCapacity = 1, BlackMarket = true)]
+        Weapons,
 
-		[CommodityDescriptor(RequiresLifeSupport = true)]
-		Passengers,
+        [CommodityDescriptor]
+        Furs,
 
-		[CommodityDescriptor(BlackMarket = true, RequiresLifeSupport = true)]
-		Slaves,
+        [CommodityDescriptor(RequiresLifeSupport = true)]
+        Passengers,
 
-		[CommodityDescriptor(RequiredCapacity = 5)]
-		Module,
+        [CommodityDescriptor(BlackMarket = true, RequiresLifeSupport = true)]
+        Slaves,
 
-		[CommodityDescriptor(RequiredCapacity = 5, BlackMarket = true)]
-		BlackMarketModule,
-	}
+        [CommodityDescriptor(RequiredCapacity = 5)]
+        Module,
 
-	static public class CommodityHelper
-	{
-		public static int RequiredCapacity(this Commodity commodity)
-		{
-			return AttributeHelper<CommodityDescriptorAttribute, Commodity>.GetAttibute((int)commodity).RequiredCapacity;
-		}
+        [CommodityDescriptor(RequiredCapacity = 5, BlackMarket = true)]
+        BlackMarketModule,
+    }
 
-		public static bool BlackMarket(this Commodity commodity)
-		{
-			return AttributeHelper<CommodityDescriptorAttribute, Commodity>.GetAttibute((int)commodity).BlackMarket;
-		}
+    static public class CommodityHelper
+    {
+        public static int RequiredCapacity(this Commodity commodity)
+        {
+            return AttributeHelper<CommodityDescriptorAttribute, Commodity>.GetAttibute((int)commodity).RequiredCapacity;
+        }
 
-		public static bool RequiresLifeSupport(this Commodity commodity)
-		{
-			return AttributeHelper<CommodityDescriptorAttribute, Commodity>.GetAttibute((int)commodity).RequiresLifeSupport;
-		}
-	}
+        public static bool BlackMarket(this Commodity commodity)
+        {
+            return AttributeHelper<CommodityDescriptorAttribute, Commodity>.GetAttibute((int)commodity).BlackMarket;
+        }
+
+        public static bool RequiresLifeSupport(this Commodity commodity)
+        {
+            return AttributeHelper<CommodityDescriptorAttribute, Commodity>.GetAttibute((int)commodity).RequiresLifeSupport;
+        }
+    }
 }
