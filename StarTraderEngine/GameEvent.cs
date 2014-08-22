@@ -45,8 +45,7 @@
                     game.AvailableEvents.Add(this);
                 }
 
-                m_turnToActivate = 0;
-                m_knownTo.Clear();
+                Reset();
                 return true;
             }
 
@@ -108,6 +107,12 @@
         {
             Debug.Assert(m_turnToActivate > 0);
             return m_knownTo.Contains(player);
+        }
+
+        protected virtual void Reset()
+        {
+            m_turnToActivate = 0;
+            m_knownTo.Clear();
         }
     }
 }

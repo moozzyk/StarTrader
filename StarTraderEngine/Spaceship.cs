@@ -1,127 +1,129 @@
 ﻿namespace StarTrader
 {
-	using System;
-	using System.Collections;
-	using System.Collections.Generic;
-	using System.Linq;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
 
-	public enum SpaceShipLocation
-	{
-		Port,
-		Hangar,
-		Shipyard,
-		Space,
-		Planet
-	}
+    public enum SpaceShipLocation
+    {
+        Port,
+        Hangar,
+        Shipyard,
+        Space,
+        Planet
+    }
 
-	public class Spaceship : CommodityStorage, IEnumerable<ShipModule>
-	{
+    public class Spaceship : CommodityStorage, IEnumerable<ShipModule>
+    {
+        private readonly HullAttribute m_hull;
+        private readonly List<ShipModule> m_modules = new List<ShipModule>();
 
-		private readonly HullAttribute m_hull;
-		private readonly List<ShipModule> m_modules = new List<ShipModule>();
+        public Spaceship(Player player, HullType hull, CrewClass crew)
+        {
+            Player = player;
+            m_hull = HullAttribute.GetAttibute(hull);
+            SetCrew(crew);
+            Location = SpaceShipLocation.Port;
+            Size = m_hull.Capacity;
+        }
 
-		public Spaceship(HullType hull, CrewClass crew)
-		{
-			m_hull = HullAttribute.GetAttibute(hull);
-			SetCrew(crew);
-			Location = SpaceShipLocation.Port;
-			Size = m_hull.Capacity;
-		}
+        public StarSystem System { get; private set; }
 
-		public StarSystem System { get; private set; }
+        public Player Player { get; private set; }
 
-		public int AvailableModuleCapacity
-		{
-			get { return m_hull.ModuleCapacity - m_modules.Sum(m => m.RequiredCapacity); }
-		}
+        public int AvailableModuleCapacity
+        {
+            get { return m_hull.ModuleCapacity - m_modules.Sum(m => m.RequiredCapacity); }
+        }
 
-		override public int AvailableCapacity
-		{
-			get { return base.AvailableCapacity + m_modules.Sum(m => m.AvailableCapacity); }
-		}
+        override public int AvailableCapacity
+        {
+            get { return base.AvailableCapacity + m_modules.Sum(m => m.AvailableCapacity); }
+        }
 
-		protected override int StoragePerUnit
-		{
-			get { return 2; }
-		}
+        protected override int StoragePerUnit
+        {
+            get { return 2; }
+        }
 
-		public SpaceShipLocation Location { get; private set; }
+        public SpaceShipLocation Location { get; private set; }
 
-		public CrewAttribute Crew { get; private set; }
+        public CrewAttribute Crew { get; private set; }
 
-		public void SetCrew(CrewClass crew)
-		{
-			Crew = CrewAttribute.GetAttibute(crew);
-		}
+        public void SetCrew(CrewClass crew)
+        {
+            Crew = CrewAttribute.GetAttibute(crew);
+        }
 
-		public void SetLocation(SpaceShipLocation location)
-		{
-			if (location == SpaceShipLocation.Planet && !m_hull.Aerodynamic)
-			{
-				throw new InvalidOperationException("Can't land on the planet");
-			}
+        public void SetLocation(SpaceShipLocation location)
+        {
+            if (location == SpaceShipLocation.Planet && !m_hull.Aerodynamic)
+            {
+                throw new InvalidOperationException("Can't land on the planet");
+            }
 
-			Location = location;
-		}
+            Location = location;
+        }
 
-		public void SetStartingSystem(StarSystem system)
-		{
-			System = system;
-		}
+        public void SetStartingSystem(StarSystem system)
+        {
+            System = system;
+        }
 
-		public int GetJumpSuccessModifier()
-		{
-			int modifier = Crew.SafeJumpModifier + m_modules.Sum(m => m.SafeJumpModifier);
-			return modifier;
-		}
+        public int GetJumpSuccessModifier()
+        {
+            int modifier = Crew.SafeJumpModifier + m_modules.Sum(m => m.SafeJumpModifier);
+            return modifier;
+        }
 
-		public override int GetCount(Commodity commodity)
-		{
-			return base.GetCount(commodity) + m_modules.Sum(m => m.GetCount(commodity));
-		}
+        public override int GetCount(Commodity commodity)
+        {
+            return base.GetCount(commodity) + m_modules.Sum(m => m.GetCount(commodity));
+        }
 
-		public override int Remove(Commodity commodity, int quantity)
-		{
-			int actuallyRemoved = base.Remove(commodity, quantity);
-			foreach (var module in m_modules.TakeWhile(module => actuallyRemoved < quantity))
-			{
-				actuallyRemoved += module.Remove(commodity, quantity - actuallyRemoved);
-			}
+        public override int Remove(Commodity commodity, int quantity)
+        {
+            int actuallyRemoved = base.Remove(commodity, quantity);
+            foreach (var module in m_modules.TakeWhile(module => actuallyRemoved < quantity))
+            {
+                actuallyRemoved += module.Remove(commodity, quantity - actuallyRemoved);
+            }
 
-			return actuallyRemoved;
-		}
+            return actuallyRemoved;
+        }
 
-		public override int Store(Commodity commodity, int quantity)
-		{
-			int actuallyStored = base.Store(commodity, quantity);
-			foreach (var module in m_modules.TakeWhile(module => actuallyStored < quantity))
-			{
-				actuallyStored += module.Store(commodity, quantity - actuallyStored);
-			}
+        public override int Store(Commodity commodity, int quantity)
+        {
+            int actuallyStored = base.Store(commodity, quantity);
+            foreach (var module in m_modules.TakeWhile(module => actuallyStored < quantity))
+            {
+                actuallyStored += module.Store(commodity, quantity - actuallyStored);
+            }
 
-			return actuallyStored;
-		}
+            return actuallyStored;
+        }
 
-		public IEnumerator<ShipModule> GetEnumerator()
-		{
-			return m_modules.GetEnumerator();
-		}
+        public IEnumerator<ShipModule> GetEnumerator()
+        {
+            return m_modules.GetEnumerator();
+        }
 
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return ((IEnumerable<ShipModule>)this).GetEnumerator();
-		}
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable<ShipModule>)this).GetEnumerator();
+        }
 
-		public void Add(ShipModule module)
-		{
-			if (AvailableModuleCapacity >= module.RequiredCapacity)
-			{
-				m_modules.Add(module);
-			}
-			else
-			{
-				throw new InvalidOperationException("Ship doesn't have required capacity to add a new module");
-			}
-		}
-	}
+        public void Add(ShipModule module)
+        {
+            if (AvailableModuleCapacity >= module.RequiredCapacity)
+            {
+                m_modules.Add(module);
+            }
+            else
+            {
+                throw new InvalidOperationException("Ship doesn't have required capacity to add a new module");
+            }
+        }
+    }
 }

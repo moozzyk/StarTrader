@@ -1,88 +1,96 @@
 ﻿namespace StarTrader
 {
-	public abstract class Connections
-	{
-		private const int MaxTies = 10;
-		private const int TiesIncrementCost = 10;
-		private readonly Type m_type;
+    using System.Globalization;
 
-		public enum Type
-		{
-			Political,
-			Economic,
-			Criminal
-		}
+    public abstract class Connections
+    {
+        private const int MaxTies = 10;
+        private const int TiesIncrementCost = 10;
+        private readonly Type m_type;
 
-		protected Connections(Type type, int current)
-		{
-			m_type = type;
-			Current = current;
-		}
+        public enum Type
+        {
+            Political,
+            Economic,
+            Criminal
+        }
 
-		public int Current { get; private set; }
+        protected Connections(Type type, int current)
+        {
+            m_type = type;
+            Current = current;
+        }
 
-		public bool Buy(Player player)
-		{
-			if (Current < MaxTies && player.Cash > TiesIncrementCost * (Current + 1))
-			{
-				Current++;
-				player.Cash -= TiesIncrementCost * Current;
-				AdjustReputation(player.Reputation);
-				return true;
-			}
+        public int Current { get; private set; }
 
-			return false;
-		}
+        public OperationStatus Buy(Player player)
+        {
+            if (Current >= MaxTies)
+            {
+                return new OperationStatus(false, "Max connections reached");
+            }
 
-		public static bool operator >= (Connections connections1, Connections connections2)
-		{
-			return connections1.m_type == connections2.m_type && connections1.Current >= connections2.Current;
-		}
+            int cost = TiesIncrementCost * (Current + 1);
+            if (player.Cash < cost)
+            {
+                return new OperationStatus(false, string.Format(CultureInfo.CurrentCulture, "Insufficient cash (required {0})", cost));
+            }
 
-		public static bool operator <= (Connections connections1, Connections connections2)
-		{
-			return connections1.m_type == connections2.m_type && connections1.Current <= connections2.Current;
-		}
+            Current++;
+            player.Cash -= TiesIncrementCost * Current;
+            AdjustReputation(player.Reputation);
+            return true;
+        }
 
-		protected abstract void AdjustReputation(Reputation reputation);
+        public static bool operator >=(Connections connections1, Connections connections2)
+        {
+            return connections1.m_type == connections2.m_type && connections1.Current >= connections2.Current;
+        }
 
-		public class Political : Connections
-		{
-			public Political(int current)
-				: base(Type.Political, current)
-			{
-			}
+        public static bool operator <=(Connections connections1, Connections connections2)
+        {
+            return connections1.m_type == connections2.m_type && connections1.Current <= connections2.Current;
+        }
 
-			protected override void AdjustReputation(Reputation reputation)
-			{
-				reputation.AdjustReputation(1);
-			}
-		}
+        protected abstract void AdjustReputation(Reputation reputation);
 
-		public class Economic : Connections
-		{
-			public Economic(int current)
-				: base(Type.Economic, current)
-			{
-			}
+        public class Political : Connections
+        {
+            public Political(int current)
+                : base(Type.Political, current)
+            {
+            }
 
-			protected override void AdjustReputation(Reputation reputation)
-			{
-				reputation.AdjustReputation(2);
-			}
-		}
+            protected override void AdjustReputation(Reputation reputation)
+            {
+                reputation.AdjustReputation(1);
+            }
+        }
 
-		public class Criminal : Connections
-		{
-			public Criminal(int current)
-				: base(Type.Criminal, current)
-			{
-			}
+        public class Economic : Connections
+        {
+            public Economic(int current)
+                : base(Type.Economic, current)
+            {
+            }
 
-			protected override void AdjustReputation(Reputation reputation)
-			{
-				reputation.AdjustReputation(-1);
-			}
-		}
-	}
+            protected override void AdjustReputation(Reputation reputation)
+            {
+                reputation.AdjustReputation(2);
+            }
+        }
+
+        public class Criminal : Connections
+        {
+            public Criminal(int current)
+                : base(Type.Criminal, current)
+            {
+            }
+
+            protected override void AdjustReputation(Reputation reputation)
+            {
+                reputation.AdjustReputation(-1);
+            }
+        }
+    }
 }

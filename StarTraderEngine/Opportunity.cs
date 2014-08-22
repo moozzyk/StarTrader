@@ -26,6 +26,27 @@ namespace StarTrader
 
         public int Limit { get; set; }
 
+        public virtual OperationStatus Assign(Spaceship ship)
+        {
+            if (m_commodity.BlackMarket() && ship.Location != SpaceShipLocation.Planet)
+            {
+                return new OperationStatus(false, "A black market opportunity can only be used on the planet surface");
+            }
+
+            if (!IsKnownTo(ship.Player))
+            {
+                return new OperationStatus(false, "This opportunity has not been revealed to {0}" + ship.Player);
+            }
+
+            // TODO - assign it to the ship
+            return true;
+        }
+
+        protected override void Reset()
+        {
+            base.Reset();
+        }
+
         public class Module : Opportunity, IEnumerable<ShipModuleType>
         {
             private readonly List<ShipModuleType> m_allowedModules = new List<ShipModuleType>();

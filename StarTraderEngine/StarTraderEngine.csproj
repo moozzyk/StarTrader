@@ -67,6 +67,7 @@
     <Compile Include="InfiniteStorage.cs" />
     <Compile Include="InitiativeStage.cs" />
     <Compile Include="InvestmentStage.cs" />
+    <Compile Include="OperationStatus.cs" />
     <Compile Include="Opportunity.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
