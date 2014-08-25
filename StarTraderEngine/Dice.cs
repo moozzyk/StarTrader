@@ -28,7 +28,7 @@
 			s_instance = dice;
 		}
 
-		private class DiceImpl : IDice
+		public class DiceImpl : IDice
 		{
 			private static readonly Random m_random = new Random(Environment.TickCount);
 

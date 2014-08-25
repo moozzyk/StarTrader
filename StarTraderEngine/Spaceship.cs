@@ -18,6 +18,7 @@
     {
         private readonly HullAttribute m_hull;
         private readonly List<ShipModule> m_modules = new List<ShipModule>();
+        private readonly List<Opportunity> m_opportunities = new List<Opportunity>();
 
         public Spaceship(Player player, HullType hull, CrewClass crew)
         {
@@ -124,6 +125,16 @@
             {
                 throw new InvalidOperationException("Ship doesn't have required capacity to add a new module");
             }
+        }
+
+        public void Add(Opportunity opportunity)
+        {
+            m_opportunities.Add(opportunity);
+        }
+
+        public void Remove(Opportunity opportunity)
+        {
+            m_opportunities.Remove(opportunity);
         }
     }
 }

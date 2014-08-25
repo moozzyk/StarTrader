@@ -23,17 +23,17 @@
 
         public int Current { get; private set; }
 
-        public OperationStatus Buy(Player player)
+        public OperationStatus<bool> Buy(Player player)
         {
             if (Current >= MaxTies)
             {
-                return new OperationStatus(false, "Max connections reached");
+                return new OperationStatus<bool>(false, "Max connections reached");
             }
 
             int cost = TiesIncrementCost * (Current + 1);
             if (player.Cash < cost)
             {
-                return new OperationStatus(false, string.Format(CultureInfo.CurrentCulture, "Insufficient cash (required {0})", cost));
+                return new OperationStatus<bool>(false, string.Format(CultureInfo.CurrentCulture, "Insufficient cash ({0} required)", cost));
             }
 
             Current++;

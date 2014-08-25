@@ -48,7 +48,7 @@
 	public class StarSystem : IEnumerable<CommodityMarket>
 	{
 		private readonly string m_name;
-		private readonly StarSystemAttribute m_type;
+		private readonly StarSystemType m_type;
 		private readonly IEnumerable<Commodity> m_allowedProduction;
 		private readonly Dictionary<Commodity, CommodityMarket> m_markets = new Dictionary<Commodity, CommodityMarket>();
 		private readonly Dictionary<Player, Warehouse> m_warehouses = new Dictionary<Player, Warehouse>();
@@ -58,7 +58,7 @@
 		public StarSystem(StarSystemType type, IEnumerable<Commodity> allowedProduction, IEnumerable<CommodityMarket> markets)
 		{
 			m_name = type.ToString();
-			m_type = StarSystemAttribute.GetAttibute(type);
+			m_type = type;
 			m_allowedProduction = allowedProduction;
 
 			foreach (var market in markets)
@@ -83,7 +83,12 @@
 			get { return m_hyperJumpSuccessChance; }
 		}
 
-		public List<Factory> GetFactories(Player player)
+	    public StarSystemType Type
+	    {
+	        get { return m_type; }
+	    }
+
+	    public List<Factory> GetFactories(Player player)
 		{
 			if (!m_factories.ContainsKey(player))
 			{

@@ -25,17 +25,17 @@ namespace StarTrader
         [CommodityDescriptor]
         Food,
 
-        [CommodityDescriptor(BlackMarket = true)]
-        Drugs,
+        [CommodityDescriptor(RequiresLifeSupport = true)]
+        Passengers,
 
         [CommodityDescriptor(RequiredCapacity = 1, BlackMarket = true)]
         Weapons,
 
-        [CommodityDescriptor]
+        [CommodityDescriptor(BlackMarket = true)]
         Furs,
 
-        [CommodityDescriptor(RequiresLifeSupport = true)]
-        Passengers,
+        [CommodityDescriptor(BlackMarket = true)]
+        Drugs,
 
         [CommodityDescriptor(BlackMarket = true, RequiresLifeSupport = true)]
         Slaves,

@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BiddingStage.cs" />
+    <Compile Include="BlackMarket.cs" />
     <Compile Include="BuyTransaction.cs" />
     <Compile Include="Commodity.cs" />
     <Compile Include="CommodityMarket.cs" />

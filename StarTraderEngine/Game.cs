@@ -9,7 +9,8 @@
 	{
 		public readonly Dictionary<StarSystemType, StarSystem> StarSystems;
 		public readonly List<GameEvent> CurrentEvents;
-		public readonly List<GameEvent> AvailableEvents; 
+		public readonly List<GameEvent> AvailableEvents;
+	    public readonly IDice Dice = new Dice.DiceImpl();
 
 		public Game()
 		{

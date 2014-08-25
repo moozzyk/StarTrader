@@ -27,7 +27,7 @@ namespace StarTrader
 			}
 
 			// draw new ones
-			int numberToDraw = Dice.Roll1Die() / 2;
+            int numberToDraw = m_game.Dice.Roll1Die() / 2;
 			var random = new Random(Environment.TickCount);
 			while (numberToDraw-- > 0 && m_game.AvailableEvents.Count > 0)
 			{
