@@ -17,13 +17,13 @@ namespace StarTrader
 			// deactivate expired events
 			foreach (var gameEvent in m_game.CurrentEvents.ToList())
 			{
-				gameEvent.Deactivate(m_game);
+				gameEvent.Deactivate();
 			}
 
 			// activate current events
 			foreach (var gameEvent in m_game.CurrentEvents.ToList())
 			{
-				gameEvent.Activate(m_game);
+				gameEvent.Activate();
 			}
 
 			// draw new ones
@@ -33,7 +33,7 @@ namespace StarTrader
 			{
 				// todo - allow player to pick?
 				int pick = random.Next(0, m_game.AvailableEvents.Count);
-				m_game.AvailableEvents[pick].Draw(m_game);
+				m_game.AvailableEvents[pick].Draw();
 			}
 		}
 

@@ -64,10 +64,12 @@
     <Compile Include="Game.cs" />
     <Compile Include="GameEvent.cs" />
     <Compile Include="GameEventFactory.cs" />
+    <Compile Include="HullOpportunity.cs" />
     <Compile Include="HullType.cs" />
     <Compile Include="InfiniteStorage.cs" />
     <Compile Include="InitiativeStage.cs" />
     <Compile Include="InvestmentStage.cs" />
+    <Compile Include="ModuleOpportunity.cs" />
     <Compile Include="OperationStatus.cs" />
     <Compile Include="Opportunity.cs" />
     <Compile Include="Player.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="Spaceship.cs" />
     <Compile Include="StarSystem.cs" />
     <Compile Include="StarSystemFactory.cs" />
+    <Compile Include="TradeOpportunity.cs" />
     <Compile Include="Transaction.cs" />
     <Compile Include="TransactionStage.cs" />
     <Compile Include="Utility.cs" />

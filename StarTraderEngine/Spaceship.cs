@@ -20,12 +20,13 @@
         private readonly List<ShipModule> m_modules = new List<ShipModule>();
         private readonly List<Opportunity> m_opportunities = new List<Opportunity>();
 
-        public Spaceship(Player player, HullType hull, CrewClass crew)
+        public Spaceship(Player player, HullType hull, CrewClass crew, StarSystem system, SpaceShipLocation location)
         {
             Player = player;
+            System = system;
+            Location = location;
             m_hull = HullAttribute.GetAttibute(hull);
             SetCrew(crew);
-            Location = SpaceShipLocation.Port;
             Size = m_hull.Capacity;
         }
 
@@ -65,11 +66,6 @@
             }
 
             Location = location;
-        }
-
-        public void SetStartingSystem(StarSystem system)
-        {
-            System = system;
         }
 
         public int GetJumpSuccessModifier()
@@ -135,6 +131,28 @@
         public void Remove(Opportunity opportunity)
         {
             m_opportunities.Remove(opportunity);
+        }
+
+        public OperationStatus<bool> BuyModule(ShipModuleType module)
+        {
+            ModuleAttribute moduleAttribute = ModuleAttribute.GetAttibute(module);
+            if (AvailableModuleCapacity < moduleAttribute.RequiredCapacity)
+            {
+                return new OperationStatus<bool>(false,
+                    string.Format("Spaceship doesn't have required module capacity (required {0}, available {1})",
+                        moduleAttribute.RequiredCapacity, AvailableModuleCapacity));
+            }
+
+            if (moduleAttribute.Price > Player.Cash)
+            {
+                return new OperationStatus<bool>(false,
+                    string.Format("Not enough cash (required {0}, available {1})", moduleAttribute.Price,
+                        Player.Cash));
+            }
+
+            Add(new ShipModule(module));
+            Player.Cash -= moduleAttribute.Price;
+            return true;
         }
     }
 }

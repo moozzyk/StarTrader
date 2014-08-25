@@ -154,6 +154,21 @@
             return removed;
         }
 
+        public OperationStatus<Spaceship> BuyShip(HullType hullType, StarSystem destination, SpaceShipLocation location)
+        {
+            HullAttribute hull = HullAttribute.GetAttibute(hullType);
+            if (hull.Price > Cash)
+            {
+                return new OperationStatus<Spaceship>(null, string.Format("Insufficient cash (required {0}, available {1})", hull.Price, Cash));
+            }
+
+            // when buying we ignore the (in)ability to land the ship on the planet
+            var ship = new Spaceship(this, hullType, CrewClass.D, destination, location);
+            Cash -= hull.Price;
+            m_ships.Add(ship);
+            return ship;
+        }
+
         public override int GetHashCode()
         {
             return Name.GetHashCode();

@@ -7,6 +7,7 @@
     {
         private const int Price = 5;
 
+        private readonly Game m_game;
         private readonly int m_delay;
         private readonly Connections m_requiredConnections;
         private readonly bool m_reusable;
@@ -15,8 +16,9 @@
 
         private int m_turnToActivate;
 
-        public GameEvent(int delay, Connections requiredConnections, bool reusable, string description)
+        public GameEvent(Game game, int delay, Connections requiredConnections, bool reusable, string description)
         {
+            m_game = game;
             m_delay = delay;
             m_requiredConnections = requiredConnections;
             m_reusable = reusable;
@@ -33,16 +35,21 @@
             get { return m_description; }
         }
 
-        public bool Deactivate(Game game)
+        protected Game Game
         {
-            if (m_turnToActivate < game.Turn)
+            get { return m_game; }
+        }
+
+        public bool Deactivate()
+        {
+            if (m_turnToActivate < m_game.Turn)
             {
-                Debug.Assert(game.CurrentEvents.Contains(this));
-                Debug.Assert(!game.AvailableEvents.Contains(this));
-                game.CurrentEvents.Remove(this);
+                Debug.Assert(m_game.CurrentEvents.Contains(this));
+                Debug.Assert(!m_game.AvailableEvents.Contains(this));
+                m_game.CurrentEvents.Remove(this);
                 if (m_reusable)
                 {
-                    game.AvailableEvents.Add(this);
+                    m_game.AvailableEvents.Add(this);
                 }
 
                 Reset();
@@ -55,9 +62,9 @@
         /// <summary>
         /// Called during the event phase
         /// </summary>
-        public bool Activate(Game game)
+        public bool Activate()
         {
-            if (m_turnToActivate == game.Turn)
+            if (m_turnToActivate == m_game.Turn)
             {
                 // do stuff
                 return true;
@@ -69,15 +76,15 @@
         /// <summary>
         /// Invoked when the event is drawn from the pool
         /// </summary>
-        public void Draw(Game game)
+        public void Draw()
         {
             Debug.Assert(m_turnToActivate == 0);
-            Debug.Assert(!game.CurrentEvents.Contains(this));
-            Debug.Assert(game.AvailableEvents.Contains(this));
+            Debug.Assert(!m_game.CurrentEvents.Contains(this));
+            Debug.Assert(m_game.AvailableEvents.Contains(this));
             Debug.Assert(m_knownTo.Count == 0);
-            m_turnToActivate = game.Turn + m_delay;
-            game.CurrentEvents.Add(this);
-            game.AvailableEvents.Remove(this);
+            m_turnToActivate = m_game.Turn + m_delay;
+            m_game.CurrentEvents.Add(this);
+            m_game.AvailableEvents.Remove(this);
         }
 
         public bool Reveal(Player player)

@@ -1,24 +1,15 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 namespace StarTrader
 {
-    public class Opportunity : GameEvent
+    public abstract class Opportunity : GameEvent
     {
-        private readonly Commodity m_commodity;
-        private readonly int m_unitCost;
         private readonly StarSystemType m_source;
-
         private Spaceship m_assignedShip;
 
-        public Opportunity(int delay, Connections requiredConnections, bool reusable, string description,
-            Commodity commodity, int unitCost, StarSystemType source)
-            : base(delay, requiredConnections, reusable, description)
+        protected Opportunity(Game game, int delay, Connections requiredConnections, bool reusable, string description, StarSystemType source)
+            : base(game, delay, requiredConnections, reusable, description)
         {
-            m_commodity = commodity;
-            m_unitCost = unitCost;
             m_source = source;
         }
 
@@ -30,9 +21,21 @@ namespace StarTrader
 
         public int Limit { get; set; }
 
-        public virtual OperationStatus<bool> Assign(Game game, Spaceship ship)
+        public abstract bool BlackMarket { get; }
+
+        protected Spaceship AssignedShip
         {
-            if (m_commodity.BlackMarket() && ship.Location != SpaceShipLocation.Planet)
+            get { return m_assignedShip; }
+        }
+
+        public StarSystemType Source
+        {
+            get { return m_source; }
+        }
+
+        public virtual OperationStatus<bool> Assign(Spaceship ship)
+        {
+            if (BlackMarket && ship.Location != SpaceShipLocation.Planet)
             {
                 // TODO - should this throw
                 return new OperationStatus<bool>(false, "A black market opportunity can only be used on the planet surface");
@@ -45,97 +48,20 @@ namespace StarTrader
 
             ship.Add(this);
 
-            Debug.Assert(m_assignedShip == null);
+            Debug.Assert(AssignedShip == null);
             m_assignedShip = ship;
 
-            game.CurrentEvents.Remove(this);
+            Game.CurrentEvents.Remove(this);
             return true;
         }
 
         protected override void Reset()
         {
             base.Reset();
-            if (m_assignedShip != null)
+            if (AssignedShip != null)
             {
-                m_assignedShip.Remove(this);
+                AssignedShip.Remove(this);
                 m_assignedShip = null;
-            }
-        }
-
-        public OperationStatus<int> BuyCommodity(Game game, int quantity)
-        {
-            if (m_assignedShip == null)
-            {
-                throw new InvalidOperationException("Opportunity can only be used with a ship");
-            }
-
-            if (m_assignedShip.System.Type != m_source || m_assignedShip.Location != SpaceShipLocation.Planet)
-            {
-                return new OperationStatus<int>(0, "Spaceship must be present on the planet of the source system");
-            }
-
-            int bought = m_assignedShip.Player.BuyCommodity(game.StarSystems[m_source], m_commodity, m_unitCost, quantity);
-            bought = m_assignedShip.Player.MoveBoughtCommodity(game.StarSystems[m_source], m_assignedShip, m_commodity, bought);
-            return bought;
-        }
-
-        public int SellCommodity(Game game, BlackMarket blackMarket)
-        {
-            if (m_assignedShip == null)
-            {
-                throw new InvalidOperationException("Opportunity can only be used with a ship");
-            }
-
-            if (m_assignedShip.System.Type != Destination || m_assignedShip.Location != SpaceShipLocation.Planet)
-            {
-                throw new InvalidOperationException("Spaceship must be present on the planet of the source system");
-            }
-
-            int price = blackMarket.CalculatePrice(m_commodity);
-            int sold = m_assignedShip.Player.SellCommodity(m_assignedShip, m_commodity, price, m_assignedShip.GetCount(m_commodity));
-            Debug.Assert(m_assignedShip.GetCount(m_commodity) == 0);
-
-            // the opportunity is used-up after the sale
-            Deactivate(game);
-            return sold;
-        }
-
-        public class Module : Opportunity, IEnumerable<ShipModuleType>
-        {
-            private readonly List<ShipModuleType> m_allowedModules = new List<ShipModuleType>();
-
-            public Module(int delay, Connections requiredConnections, bool reusable, string description, StarSystemType source)
-                : base(delay, requiredConnections, reusable, description, Commodity.Module, 0, source)
-            {
-            }
-
-            public IEnumerator<ShipModuleType> GetEnumerator()
-            {
-                return m_allowedModules.GetEnumerator();
-            }
-
-            IEnumerator IEnumerable.GetEnumerator()
-            {
-                return GetEnumerator();
-            }
-
-            public void Add(ShipModuleType shipModule)
-            {
-                m_allowedModules.Add(shipModule);
-            }
-        }
-
-        public class Hull : Opportunity
-        {
-            private readonly HullType? m_hullType;
-            private readonly int m_allowedModules;
-
-            public Hull(int delay, Connections requiredConnections, bool reusable, string description, StarSystemType source, HullType? hullType, int allowedModules)
-                : base(delay, requiredConnections, reusable, description, Commodity.Module /*irrelevant*/, 0, source)
-            {
-                // null means any black-market
-                m_hullType = hullType;
-                m_allowedModules = allowedModules;
             }
         }
 
@@ -143,17 +69,22 @@ namespace StarTrader
         {
             private readonly int m_requiredReputation;
 
-            public EnvoyTransport(int delay, Connections requiredConnections, bool reusable, string description, StarSystemType source, int requiredReputation)
-                : base(delay, requiredConnections, reusable, description, Commodity.Passengers, 0, source)
+            public EnvoyTransport(Game game, int delay, Connections requiredConnections, bool reusable, string description, StarSystemType source, int requiredReputation)
+                : base(game, delay, requiredConnections, reusable, description, source)
             {
                 m_requiredReputation = requiredReputation;
+            }
+
+            public override bool BlackMarket
+            {
+                get { return false; }
             }
         }
 
         public class Delivery : Opportunity
         {
-            public Delivery(int delay, Connections requiredConnections, bool reusable, string description, StarSystemType source)
-                : base(delay, requiredConnections, reusable, description, Commodity.Food /*irrelevant*/, 0, source)
+            public Delivery(Game game, int delay, Connections requiredConnections, bool reusable, string description, StarSystemType source)
+                : base(game, delay, requiredConnections, reusable, description, source)
             {
             }
 
@@ -162,16 +93,26 @@ namespace StarTrader
             public int RequiredFreight { get; set; }
 
             public int RequiredPassenger { get; set; }
+
+            public override bool BlackMarket
+            {
+                get { return false; }
+            }
         }
 
         public class ResearchExpedition : Opportunity
         {
-            public ResearchExpedition(int delay, Connections requiredConnections, bool reusable, string description)
-                : base(delay, requiredConnections, reusable, description, Commodity.Furs /*irrelevant*/, 0, StarSystemType.BetaHydri /*irrelevant*/)
+            public ResearchExpedition(Game game, int delay, Connections requiredConnections, bool reusable, string description)
+                : base(game, delay, requiredConnections, reusable, description, StarSystemType.BetaHydri /*irrelevant*/)
             {
                 // Organized by independent corporation. Player can send 1 legal ship. 
                 // Roll 1D and move the ship to the turn ahead by the number rolled - that's the turn when the ship returns. if rolled 1, the ship is destroyed.
                 // After the return roll 2D and multiple by 50 for the reward
+            }
+
+            public override bool BlackMarket
+            {
+                get { return false; }
             }
         }
     }
