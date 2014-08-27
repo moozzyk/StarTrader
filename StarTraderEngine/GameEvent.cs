@@ -44,7 +44,7 @@
         {
             if (m_turnToActivate < m_game.Turn)
             {
-                Debug.Assert(m_game.CurrentEvents.Contains(this));
+                Debug.Assert(m_game.CurrentEvents.Contains(this) || this is Opportunity);
                 Debug.Assert(!m_game.AvailableEvents.Contains(this));
                 m_game.CurrentEvents.Remove(this);
                 if (m_reusable)

@@ -64,56 +64,5 @@ namespace StarTrader
                 m_assignedShip = null;
             }
         }
-
-        public class EnvoyTransport : Opportunity
-        {
-            private readonly int m_requiredReputation;
-
-            public EnvoyTransport(Game game, int delay, Connections requiredConnections, bool reusable, string description, StarSystemType source, int requiredReputation)
-                : base(game, delay, requiredConnections, reusable, description, source)
-            {
-                m_requiredReputation = requiredReputation;
-            }
-
-            public override bool BlackMarket
-            {
-                get { return false; }
-            }
-        }
-
-        public class Delivery : Opportunity
-        {
-            public Delivery(Game game, int delay, Connections requiredConnections, bool reusable, string description, StarSystemType source)
-                : base(game, delay, requiredConnections, reusable, description, source)
-            {
-            }
-
-            public int ReputationBoost { get; set; }
-
-            public int RequiredFreight { get; set; }
-
-            public int RequiredPassenger { get; set; }
-
-            public override bool BlackMarket
-            {
-                get { return false; }
-            }
-        }
-
-        public class ResearchExpedition : Opportunity
-        {
-            public ResearchExpedition(Game game, int delay, Connections requiredConnections, bool reusable, string description)
-                : base(game, delay, requiredConnections, reusable, description, StarSystemType.BetaHydri /*irrelevant*/)
-            {
-                // Organized by independent corporation. Player can send 1 legal ship. 
-                // Roll 1D and move the ship to the turn ahead by the number rolled - that's the turn when the ship returns. if rolled 1, the ship is destroyed.
-                // After the return roll 2D and multiple by 50 for the reward
-            }
-
-            public override bool BlackMarket
-            {
-                get { return false; }
-            }
-        }
     }
 }

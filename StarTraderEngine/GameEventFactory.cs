@@ -17,7 +17,7 @@ namespace StarTrader
                 // Buy (10) SPACE PORT Mu Herkulis, sell (30) SPACE PORT Beta Hydri. Can buy 10 units, does not take cargo space.
                 new TradeOpportunity(game, 2, new Connections.Criminal(5), true, "Slaves", Commodity.Slaves, 2, StarSystemType.MuHerculis) { Destination = StarSystemType.BetaHydri },
                 new TradeOpportunity(game, 1, new Connections.Criminal(6), true, "Drugs", Commodity.Drugs, 15, StarSystemType.BetaHydri) { Destination = StarSystemType.GammaLeporis },
-                new Opportunity.EnvoyTransport(game, 1, new Connections.Political(5), true, "Envoy transport", StarSystemType.EpsilonEridani, 20) 
+                new EnvoyTransport(game, 1, new Connections.Political(5), true, "Envoy transport", StarSystemType.EpsilonEridani, 20) 
                 {
                     Destination = StarSystemType.MuHerculis,
                     Location = SpaceShipLocation.Port,
@@ -25,7 +25,7 @@ namespace StarTrader
                 },
                 // Transport the envoy and his companions from SPACE PORT Epsilon Eridani to SPACE PORT Mu Herkulis. 
                 // Requires 1 passenger module. Requires REPUTATION 20 or more. Receives 200 HT after arrival to Mu Herkulis.
-                new Opportunity.Delivery(game, 2, new Connections.Economic(10), true, "Unknown alien plants", StarSystemType.GammaLeporis)
+                new DeliveryOpportunity(game, 2, new Connections.Economic(10), true, "Unknown alien plants", StarSystemType.GammaLeporis)
                 {
                     Destination = StarSystemType.EpsilonEridani,
                     Location = SpaceShipLocation.Port,
@@ -47,7 +47,7 @@ namespace StarTrader
                     ShipModuleType.HeavyWeapons,
                     ShipModuleType.Hunter,
                 }, // One each type. Available on Tau Ceti.
-                new Opportunity.ResearchExpedition(game, 2, new Connections.Political(2), true, "Research expedition"),
+                new ResearchExpedition(game, 2, new Connections.Political(2), true, "Research expedition"),
                 new HullOpportunity(game, 4, new Connections.Economic(3), true, "Hull Dagger", StarSystemType.TauCeti, HullType.Dagger, 1),
                 // Hull Dagger and/or 1 black market module. Available on Tau Ceti.
                 new TradeOpportunity(game, 3, new Connections.Economic(8), true, "Weapons", Commodity.Weapons, 8, StarSystemType.EpsilonEridani) { Destination = StarSystemType.GammaLeporis },
@@ -57,7 +57,7 @@ namespace StarTrader
                 // Any black market hull and/or 5 modules. Available on Mu Herkulis.
                 new HullOpportunity(game, 2, new Connections.Criminal(8), true,  "Hull Sword", StarSystemType.MuHerculis, HullType.Sword, 3),
                 // Hull Sword and/or 3 black market modules. Available on Mu Herkulis.
-                new Opportunity.Delivery(game, 1, new Connections.Economic(5), true, "Unique animals", StarSystemType.MuHerculis)
+                new DeliveryOpportunity(game, 1, new Connections.Economic(5), true, "Unique animals", StarSystemType.MuHerculis)
                 {
                     Destination = StarSystemType.EpsilonEridani,
                     Location = SpaceShipLocation.Port,
@@ -65,7 +65,7 @@ namespace StarTrader
                     RequiredPassenger = 1
                 },
                 // Pick up from SPACE PORT Mu Herkulis and delivery to SPACE PORT Epsilon Eridani. Require 1 passenger module. Reward after arrival - 150 HT.
-                new TradeOpportunity(game, 2 ,new Connections.Criminal(5), true,  "Weapons", Commodity.Weapons, 3, StarSystemType.EpsilonEridani) { Destination = StarSystemType.MuHerculis },
+                new TradeOpportunity(game, 2, new Connections.Criminal(5), true,  "Weapons", Commodity.Weapons, 3, StarSystemType.EpsilonEridani) { Destination = StarSystemType.MuHerculis },
                 new HullOpportunity(game, 3, new Connections.Criminal(4), true,  "Hull Dagger", StarSystemType.SigmaDraconis, HullType.Dagger, 1),
                 // Hull Dagger and/or 1 black market moduł. Available on Sigma Draconis.
                 new TradeOpportunity(game, 1, new Connections.Political(7), true, "Weapons", Commodity.Weapons, 5, StarSystemType.BetaHydri) { Destination = StarSystemType.MuHerculis },

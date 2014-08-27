@@ -31,7 +31,7 @@ namespace StarTrader
         [CommodityDescriptor(RequiredCapacity = 1, BlackMarket = true)]
         Weapons,
 
-        [CommodityDescriptor(BlackMarket = true)]
+        [CommodityDescriptor(BlackMarket = true, RequiredCapacity = 0)]
         Furs,
 
         [CommodityDescriptor(BlackMarket = true)]

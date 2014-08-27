@@ -44,6 +44,11 @@
             get { return base.AvailableCapacity + m_modules.Sum(m => m.AvailableCapacity); }
         }
 
+        public bool Illegal
+        {
+            get { return m_hull.Military || m_modules.Any(m => m.Military); }
+        }
+
         protected override int StoragePerUnit
         {
             get { return 2; }

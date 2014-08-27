@@ -169,6 +169,13 @@
             return ship;
         }
 
+        public void RemoveShip(Spaceship ship)
+        {
+            Debug.Assert(Equals(ship.Player));
+            Debug.Assert(m_ships.Contains(ship));
+            m_ships.Remove(ship);
+        }
+
         public override int GetHashCode()
         {
             return Name.GetHashCode();

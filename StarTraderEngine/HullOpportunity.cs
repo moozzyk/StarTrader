@@ -20,7 +20,17 @@ namespace StarTrader
 
         public override bool BlackMarket
         {
-            get { return m_hullType == null || HullAttribute.GetAttibute(m_hullType.Value).Military; }
+            get { return HullType == null || HullAttribute.GetAttibute(HullType.Value).Military; }
+        }
+
+        public HullType? HullType
+        {
+            get { return m_hullType; }
+        }
+
+        public int AllowedModules
+        {
+            get { return m_allowedModules; }
         }
 
         protected override void Reset()
@@ -42,7 +52,7 @@ namespace StarTrader
                 throw new InvalidOperationException("Ship can only be bought once");
             }
 
-            if (m_hullType != null && m_hullType != hullType)
+            if (HullType != null && HullType != hullType)
             {
                 throw new InvalidOperationException("Hull type not allowed");
             }
@@ -70,7 +80,7 @@ namespace StarTrader
                 return new OperationStatus<bool>(false, "Only black market (military) modules are available");
             }
 
-            if (m_boughtModules == m_allowedModules)
+            if (m_boughtModules == AllowedModules)
             {
                 return new OperationStatus<bool>(false, "Maximum number of modules allowed reached");
             }
@@ -81,7 +91,7 @@ namespace StarTrader
                 m_boughtModules++;
             }
 
-            if (m_boughtModules == m_allowedModules)
+            if (m_boughtModules == AllowedModules)
             {
                 Deactivate();
             }
