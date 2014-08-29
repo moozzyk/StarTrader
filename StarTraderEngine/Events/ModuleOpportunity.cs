@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace StarTrader
+﻿namespace StarTrader.Events
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class ModuleOpportunity : Opportunity, IEnumerable<ShipModuleType>
     {
         private readonly List<ShipModuleType> m_allowedModules = new List<ShipModuleType>();

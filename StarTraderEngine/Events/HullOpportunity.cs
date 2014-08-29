@@ -1,8 +1,7 @@
-using System;
-using System.Collections.Generic;
-
-namespace StarTrader
+namespace StarTrader.Events
 {
+    using System;
+
     public class HullOpportunity : Opportunity
     {
         private readonly HullType? m_hullType;

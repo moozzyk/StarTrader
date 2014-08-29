@@ -1,8 +1,8 @@
-﻿using System;
-using System.Diagnostics;
-
-namespace StarTrader
+﻿namespace StarTrader.Events
 {
+    using System;
+    using System.Diagnostics;
+
     public class TradeOpportunity : Opportunity
     {
         private readonly Commodity m_commodity;

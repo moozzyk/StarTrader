@@ -1,4 +1,4 @@
-﻿namespace StarTrader
+﻿namespace StarTrader.Events
 {
     using System.Collections.Generic;
     using System.Diagnostics;
@@ -67,6 +67,7 @@
             if (m_turnToActivate == m_game.Turn)
             {
                 // do stuff
+                Execute();
                 return true;
             }
 
@@ -120,6 +121,10 @@
         {
             m_turnToActivate = 0;
             m_knownTo.Clear();
+        }
+
+        protected virtual void Execute()
+        {
         }
     }
 }

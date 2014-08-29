@@ -1,7 +1,7 @@
-﻿using System.Diagnostics;
-
-namespace StarTrader
+﻿namespace StarTrader.Events
 {
+    using System.Diagnostics;
+
     public abstract class Opportunity : GameEvent
     {
         private readonly StarSystemType m_source;

@@ -1,18 +1,22 @@
-﻿using System;
-using System.Linq;
-
-namespace StarTrader
+namespace StarTrader.Events
 {
-    public class EnvoyTransport : Opportunity
-    {
-        private readonly int m_requiredReputation;
-        private bool m_envoyBoarded;
+    using System;
+    using System.Linq;
 
-        public EnvoyTransport(Game game, int delay, Connections requiredConnections, bool reusable, string description, StarSystemType source, int requiredReputation)
+    public class DeliveryOpportunity : Opportunity
+    {
+        private bool m_cargoLoaded;
+
+        public DeliveryOpportunity(Game game, int delay, Connections requiredConnections, bool reusable, string description, StarSystemType source)
             : base(game, delay, requiredConnections, reusable, description, source)
         {
-            m_requiredReputation = requiredReputation;
         }
+
+        public int ReputationBoost { get; set; }
+
+        public int RequiredFreight { get; set; }
+
+        public int RequiredPassenger { get; set; }
 
         public override bool BlackMarket
         {
@@ -21,35 +25,30 @@ namespace StarTrader
 
         public override OperationStatus<bool> Assign(Spaceship ship)
         {
-            if (ship.Player.Reputation.Current < m_requiredReputation)
+            if (ship.Count(m => m.Size > 0) < RequiredFreight || ship.Count(m => m.LifeSupport) < RequiredPassenger)
             {
-                return new OperationStatus<bool>(false, string.Format("Insufficient reputation (required {0})", m_requiredReputation));
-            }
-
-            if (!ship.Any(m => m.LifeSupport))
-            {
-                return new OperationStatus<bool>(false, "Envoy transport requires a passenger module");
+                return new OperationStatus<bool>(false, "Delivery requires a freight and/or passenger modules");
             }
 
             return base.Assign(ship);
         }
 
-        public OperationStatus<bool> Embark()
+        public OperationStatus<bool> Load()
         {
             if (AssignedShip.System.Type != Source || AssignedShip.Location != Location)
             {
                 return new OperationStatus<bool>(false, "Spaceship must be present in the requied location of the source system");
             }
 
-            m_envoyBoarded = true;
+            m_cargoLoaded = true;
             return true;
         }
 
         public OperationStatus<bool> Deliver()
         {
-            if (!m_envoyBoarded)
+            if (!m_cargoLoaded)
             {
-                throw new InvalidOperationException("Envoy must board before delivery");
+                throw new InvalidOperationException("Cargo must be loaded before delivery");
             }
 
             if (AssignedShip.System.Type != Destination || AssignedShip.Location != Location)
@@ -58,6 +57,7 @@ namespace StarTrader
             }
 
             AssignedShip.Player.Cash += SellPrice;
+            AssignedShip.Player.Reputation.AdjustReputation(ReputationBoost);
             Deactivate();
             return true;
         }
@@ -65,7 +65,7 @@ namespace StarTrader
         protected override void Reset()
         {
             base.Reset();
-            m_envoyBoarded = false;
+            m_cargoLoaded = false;
         }
     }
 }

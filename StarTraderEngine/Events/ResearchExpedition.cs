@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace StarTrader
+﻿namespace StarTrader.Events
 {
+    using System;
+
     public class ResearchExpedition : Opportunity
     {
         private const int RewardMultiplier = 50;
