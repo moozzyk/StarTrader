@@ -35,15 +35,15 @@ namespace StarTrader
             Turn = 0;
             Players = scenario.CreatePlayers(playerNames).ToList();
 
-            // TOOD: total initial ties
+            // TODO: total initial ties
         }
 
         public int Turn { get; private set; }
 
         public int HyperjumpModifier { get; set; }
 
-        public List<Player> Players { get; private set; }
-
         public IEnumerable<Player> PlayersByInitiative { get { return Players.OrderByDescending(player => player.Initiative); } }
+
+        public List<Player> Players { get; internal set; }
     }
 }
