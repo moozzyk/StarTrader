@@ -1,0 +1,64 @@
+﻿@using Microsoft.AspNet.Identity
+@model StarTrader.Models.GameEntryViewModel
+@{
+    ViewBag.Title = "Games";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@*@ViewBag.Message*@</h3>
+
+<div>
+    <hr />
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date Created</th>
+                <th>Created by</th>
+                <th>Players</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var gameEntry in Model.GameEntries)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(m => gameEntry.GameName)</td>
+                    <td>@gameEntry.DateCreated.ToLocalTime().ToString("G")</td>
+                    <td>@Model.GetUserName(gameEntry.OwnerId)</td>
+                    <td>
+                        <ul>
+                            @foreach (var playerId in gameEntry.PlayerIds)
+                            {
+                                <ul>@Model.GetUserName(playerId)</ul>
+                            }
+                        </ul>
+                    </td>
+                    <td>
+                        @if (gameEntry.PlayerIds.Contains(User.Identity.GetUserId()))
+                        {
+                            @Html.ActionLink("Leave", "Leave", new { gameId = gameEntry.Id });
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Join", "Join", new { gameId = gameEntry.Id });
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+    <h4>Create a new game.</h4>
+    <hr />
+    @using (Html.BeginForm("NewGame", "Games", FormMethod.Post, new {@class = "form-horizontal"}))
+    {
+        <div class="form-group">
+            @Html.TextBoxFor(m => m.NewGameName, new Dictionary<string, object> {{"placeholder", "Enter game name"}})
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn" value="Create Game" />
+        </div>
+    }
+
+    </div>
