@@ -22,7 +22,7 @@ namespace StarTrader
             m_dice = dice;
         }
 
-        public int CalculatePrice(Commodity commodity)
+        public int CalculatePrice(StarSystem starSystem, Commodity commodity)
         {
             if (!commodity.BlackMarket())
             {
@@ -32,7 +32,8 @@ namespace StarTrader
             Debug.Assert(commodity >= Commodity.Weapons && commodity <= Commodity.Slaves);
             int index = m_dice.Roll1Die();
             Debug.Assert(index >= 1 && index <= 6);
-            return SellPrice[index - 1][commodity - Commodity.Weapons];
+            int multiplier = (starSystem.AtWar && commodity == Commodity.Weapons) ? Events.CivilWar.WeaponsPriceMultiplier : 1;
+            return multiplier * SellPrice[index - 1][commodity - Commodity.Weapons];
         }
     }
 }

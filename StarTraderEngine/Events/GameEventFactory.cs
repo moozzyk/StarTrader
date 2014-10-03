@@ -81,9 +81,9 @@
                 // Events
                 new HyperjumpModifier(game, 1, new Connections.Economic(5), true, "Psychic disruption", -4), // Substract 4 from dice rolls in hyperjump phase
                 new PriceModifier(game, 1, new Connections.Political(10), false, "Alien attack", c => -3, null), // Border planets under attack. Panic ensues. All prices go down by 3.
-                new GameEvent(game, 4, new Connections.Political(3), true, "Galactic war"), // Component prices +3. Polymers +6. Isotopes +2. During this turn (and next) ships cannot be bought (including black market). Ignore applicable events. Add 5 to the die roll for spaceship sellers during these stages. Increment Police Efficiency by 4 during this turn.
-                new GameEvent(game, 3, new Connections.Criminal(3),  false, "Inflation"), // Fake bank notes flood the market. Cut everyone's cash by 50% (round up). Also cut all unpaid loans (don't change interest).
-                new GameEvent(game, 2, new Connections.Political(2), true, "Civil war"), // Civil war in Gamma Leporis. Weapons prices sold on the Gamma Leporis planet increase 3x. All ships in that space port and all factories and warehouses on Gamma Leporis are nationalized - discard them. Owners are compensated at 50% current value of the factories, warehouse prices and catalog price of the ships (hull and modules, not the crew). Commodities are lost.
+                new GalacticWar(game, 4, new Connections.Political(3), true),
+                new Inflation(game, 3, new Connections.Criminal(3),  false),
+                new CivilWar(game, 2, new Connections.Political(2), true),
                 new PriceModifier(game, 4, new Connections.Political(3), true, "Colony", c => 5, s => s == StarSystemType.MuHerculis), // New planet in Mu Herkulis. All prices in the system go up by 5.
                 new GameEvent(game, 2, new Connections.Economic(6), false, "Technological breakthrough"), // In components. All Supply/demand modifiers go up by 3 through the end of the game.
                 new GameEvent(game, 3, new Connections.Economic(8), false, "Technological breakthrough"), // Food production; synthetic food is available. All Supply/demand modifiers go up by 2 through the end of the game.

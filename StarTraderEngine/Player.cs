@@ -26,6 +26,8 @@
 
         public int Cash { get; set; }
 
+        public int Debt { get; set; }
+
         public int Initiative { get; set; }
 
         public int Order { get; set; }
@@ -33,6 +35,11 @@
         public Reputation Reputation
         {
             get { return m_reputation; }
+        }
+
+        public List<Spaceship> Ships
+        {
+            get { return m_ships; }
         }
 
         public int GetInitiative(int cost)
@@ -118,7 +125,7 @@
         {
             // calculate how much we can sell - check warehouses, ships in port
             int available = system.GetWarehouse(this).GetCount(commodity) +
-                m_ships.Where(s => s.System.Equals(system) && s.Location == SpaceShipLocation.Port).Sum(s => s.GetCount(commodity));
+                Ships.Where(s => s.System.Equals(system) && s.Location == SpaceShipLocation.Port).Sum(s => s.GetCount(commodity));
 
             // buying and seeling on the same market is not allowed, so temp storage should be empty
             Debug.Assert(!m_temporaryStorage.ContainsKey(system) || m_temporaryStorage[system].GetCount(commodity) == 0);
@@ -127,7 +134,7 @@
             // store the commodity
             int sold = SellCommodity(system.GetWarehouse(this), commodity, price, canSell);
 
-            foreach (var ship in m_ships.TakeWhile(s => sold < canSell))
+            foreach (var ship in Ships.TakeWhile(s => sold < canSell))
             {
                 sold += SellCommodity(ship, commodity, price, canSell - sold);
             }
@@ -154,8 +161,13 @@
             return removed;
         }
 
-        public OperationStatus<Spaceship> BuyShip(HullType hullType, StarSystem destination, SpaceShipLocation location)
+        public OperationStatus<Spaceship> BuyShip(Game game, HullType hullType, StarSystem destination, SpaceShipLocation location)
         {
+            if (!game.ShipTradeAllowed)
+            {
+                return new OperationStatus<Spaceship>(null, string.Format("Ship trade prohibited during this turn"));
+            }
+
             HullAttribute hull = HullAttribute.GetAttibute(hullType);
             if (hull.Price > Cash)
             {
@@ -165,15 +177,28 @@
             // when buying we ignore the (in)ability to land the ship on the planet
             var ship = new Spaceship(this, hullType, CrewClass.D, destination, location);
             Cash -= hull.Price;
-            m_ships.Add(ship);
+            Ships.Add(ship);
             return ship;
+        }
+
+        public OperationStatus<bool> SellShip(Game game, Spaceship ship)
+        {
+            if (ship.Player != this)
+            {
+                throw new InvalidOperationException("Ship doesn't belong to this player");
+            }
+
+            int dieModifier = game.ShipTradeModifier;
+
+            // TODO
+            return true;
         }
 
         public void RemoveShip(Spaceship ship)
         {
             Debug.Assert(Equals(ship.Player));
-            Debug.Assert(m_ships.Contains(ship));
-            m_ships.Remove(ship);
+            Debug.Assert(Ships.Contains(ship));
+            Ships.Remove(ship);
         }
 
         public override int GetHashCode()

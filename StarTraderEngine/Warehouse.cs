@@ -1,25 +1,40 @@
 ﻿namespace StarTrader
 {
-	public class Warehouse : CommodityStorage
-	{
-		public const int Price = 20;
+    using System;
 
-		public Warehouse(Player owner)
-		{
-			Owner = owner;
-		}
+    public class Warehouse : CommodityStorage
+    {
+        public const int Price = 20;
 
-		public Player Owner { get; private set; }
+        public Warehouse(Player owner)
+        {
+            Owner = owner;
+        }
 
-		public override int Store(Commodity commodity, int quantity)
-		{
-			if (commodity.BlackMarket())
-			{
-				// can't store illegal materials in warehouses
-				return 0;
-			}
+        public Player Owner { get; private set; }
 
-			return base.Store(commodity, quantity);
-		}
-	}
+        public override int Store(Commodity commodity, int quantity)
+        {
+            if (commodity.BlackMarket())
+            {
+                // can't store illegal materials in warehouses
+                return 0;
+            }
+
+            return base.Store(commodity, quantity);
+        }
+
+        public void Empty()
+        {
+            foreach (Commodity commodity in Enum.GetValues(typeof(Commodity)))
+            {
+                Remove(commodity, GetCount(commodity));
+            }
+        }
+
+        public int GetPrice()
+        {
+            return Price * Size;
+        }
+    }
 }

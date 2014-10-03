@@ -20,6 +20,7 @@ namespace StarTrader
             StarSystems = StarSystemFactory.CreateStarSystems();
             CurrentEvents = new List<GameEvent>();
             AvailableEvents = GameEventFactory.CreateEvents(this);
+            ShipTradeAllowed = true;
         }
 
         public void Initialize(string[] playerNames, Scenario scenario)
@@ -45,5 +46,9 @@ namespace StarTrader
         public IEnumerable<Player> PlayersByInitiative { get { return Players.OrderByDescending(player => player.Initiative); } }
 
         public List<Player> Players { get; internal set; }
+
+        public bool ShipTradeAllowed { get; set; }
+
+        public int ShipTradeModifier { get; set; }
     }
 }

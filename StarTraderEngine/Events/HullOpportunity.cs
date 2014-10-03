@@ -56,7 +56,7 @@ namespace StarTrader.Events
                 throw new InvalidOperationException("Hull type not allowed");
             }
 
-            var result = AssignedShip.Player.BuyShip(hullType, Game.StarSystems[Source], SpaceShipLocation.Planet);
+            var result = AssignedShip.Player.BuyShip(Game, hullType, Game.StarSystems[Source], SpaceShipLocation.Planet);
             var ship = (Spaceship)result;
             if (ship == null)
             {

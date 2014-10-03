@@ -80,6 +80,11 @@
             return modifier;
         }
 
+        public int GetPrice()
+        {
+            return m_hull.Price + m_modules.Sum(m => m.Price);
+        }
+
         public override int GetCount(Commodity commodity)
         {
             return base.GetCount(commodity) + m_modules.Sum(m => m.GetCount(commodity));

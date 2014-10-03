@@ -49,7 +49,7 @@
                 throw new InvalidOperationException("Spaceship must be present on the planet of the source system");
             }
 
-            int price = blackMarket.CalculatePrice(m_commodity);
+            int price = blackMarket.CalculatePrice(AssignedShip.System, m_commodity);
             int sold = AssignedShip.Player.SellCommodity(AssignedShip, m_commodity, price, AssignedShip.GetCount(m_commodity));
             Debug.Assert(AssignedShip.GetCount(m_commodity) == 0);
 
