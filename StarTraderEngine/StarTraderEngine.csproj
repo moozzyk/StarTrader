@@ -60,10 +60,15 @@
     <Compile Include="Dice.cs" />
     <Compile Include="Events\EnvoyTransport.cs" />
     <Compile Include="EventStage.cs" />
+    <Compile Include="Events\Epidemic.cs" />
     <Compile Include="Events\GalacticWar.cs" />
+    <Compile Include="Events\Inspection.cs" />
     <Compile Include="Events\HyperjumpModifier.cs" />
     <Compile Include="Events\Inflation.cs" />
+    <Compile Include="Events\Pirates.cs" />
     <Compile Include="Events\PriceModifier.cs" />
+    <Compile Include="Events\Tax.cs" />
+    <Compile Include="Events\TechBreakthrough.cs" />
     <Compile Include="HyperjumpStage.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="FreeTradeScenario.cs" />

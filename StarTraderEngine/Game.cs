@@ -41,7 +41,12 @@ namespace StarTrader
 
         public int Turn { get; private set; }
 
+        /// <summary>
+        /// TODO move these into their own class
+        /// </summary>
         public int HyperjumpModifier { get; set; }
+
+        public Func<SpaceShipLocation, bool> HyperjumpAllowed { get; set; }
 
         public IEnumerable<Player> PlayersByInitiative { get { return Players.OrderByDescending(player => player.Initiative); } }
 
@@ -49,6 +54,10 @@ namespace StarTrader
 
         public bool ShipTradeAllowed { get; set; }
 
+        /// <summary>
+        /// TODO - this and stuff in CivilWar should be moved to a proper class
+        /// that calculates prices
+        /// </summary>
         public int ShipTradeModifier { get; set; }
     }
 }

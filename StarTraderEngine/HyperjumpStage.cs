@@ -1,4 +1,4 @@
-﻿namespace StarTrader.Events
+﻿namespace StarTrader
 {
     public class HyperjumpStage
     {
@@ -12,6 +12,8 @@
         public void Hyperjump(Spaceship ship, StarSystem destination)
         {
             int diceModifier = m_game.HyperjumpModifier;
+
+            // todo - HyperjumpAllowed
         }
     }
 }

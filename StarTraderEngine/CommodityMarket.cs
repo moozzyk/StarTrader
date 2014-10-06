@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
-    using StarTrader.Events;
 
     public class CommodityMarket
     {
@@ -31,7 +30,7 @@
 
         public int Price { get; private set; }
 
-        public int SupplyDemandModifier { get; private set; }
+        public int SupplyDemandModifier { get; set; }
 
         public Player Dictator { get; private set; }
 

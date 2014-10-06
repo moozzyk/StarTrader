@@ -60,8 +60,8 @@
             m_name = type.ToString();
             m_type = type;
             m_allowedProduction = allowedProduction;
-            PoliceEfficiency =
-                AttributeHelper<StarSystemAttribute, StarSystemType>.GetAttibute((int)type).PoliceEfficiency;
+            PoliceEfficiency = AttributeHelper<StarSystemAttribute, StarSystemType>.GetAttibute((int)type).PoliceEfficiency;
+            SecurityLevel = AttributeHelper<StarSystemAttribute, StarSystemType>.GetAttibute((int)type).SecurityLevel;
 
             foreach (var market in markets)
             {
@@ -93,6 +93,8 @@
         public bool AtWar { get; set; }
 
         public int PoliceEfficiency { get; set; }
+
+        public int SecurityLevel { get; set; }
 
         public List<Factory> GetFactories(Player player)
         {

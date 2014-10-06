@@ -183,7 +183,7 @@
 
         public OperationStatus<bool> SellShip(Game game, Spaceship ship)
         {
-            if (ship.Player != this)
+            if (!Equals(ship.Player, this))
             {
                 throw new InvalidOperationException("Ship doesn't belong to this player");
             }

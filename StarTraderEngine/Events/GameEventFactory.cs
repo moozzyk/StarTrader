@@ -85,13 +85,13 @@
                 new Inflation(game, 3, new Connections.Criminal(3),  false),
                 new CivilWar(game, 2, new Connections.Political(2), true),
                 new PriceModifier(game, 4, new Connections.Political(3), true, "Colony", c => 5, s => s == StarSystemType.MuHerculis), // New planet in Mu Herkulis. All prices in the system go up by 5.
-                new GameEvent(game, 2, new Connections.Economic(6), false, "Technological breakthrough"), // In components. All Supply/demand modifiers go up by 3 through the end of the game.
-                new GameEvent(game, 3, new Connections.Economic(8), false, "Technological breakthrough"), // Food production; synthetic food is available. All Supply/demand modifiers go up by 2 through the end of the game.
-                new GameEvent(game, 2, new Connections.Economic(6), false, "Technological breakthrough"), // Isotope production. All Supply/demand modifiers go down by 3 through the end of the game, can't be lower than -10.
-                new GameEvent(game, 1, new Connections.Political(7), false, "Epidemic"), // Prices increase by 4. Can't hyperjump to and from space ports (only to/from the plant and space). Police efficiency and security level increase by during this turn.
-                new GameEvent(game, 4, new Connections.Political(8), true, "Inspection"), // Federal govt interrogates everyone. Decrement everyone's Reputation by 2D (each player rolls separately).
-                new GameEvent(game, 1, new Connections.Criminal(10),  true, "Pirate attack"), // On Mu Herkulis. All commodities and modules in warehouses are lost. Roll 1D for each ship in space port in Mu Herkulis. If <= 3 - the ship and everything onboard is lost, >=4 ship escapes into inter-planetary space. Police efficiency and Security level go up by 3 during this turn.
-                new GameEvent(game, 4, new Connections.Political(3), true, "Special tax"), // Every player immediately pays 1 HT for each warehouse capacity unit, 2 HT for each unit of factory capacity and 5 HT for each space ship. Up to available cash.
+                new TechBreakthrough(game, 2, new Connections.Economic(6), Commodity.Component, 3),
+                new TechBreakthrough(game, 3, new Connections.Economic(8), Commodity.Food, 2),
+                new TechBreakthrough(game, 2, new Connections.Economic(6), Commodity.Isotope, -3),
+                new Epidemic(game, 1, new Connections.Political(7), false),
+                new Inspection(game, 4, new Connections.Political(8), true),
+                new Pirates(game, 1, new Connections.Criminal(10),  true),
+                new Tax(game, 4, new Connections.Political(3), true),
                 new PriceModifier(game, 4, new Connections.Economic(3), false, "Discovery", c => (c == Commodity.Component || c == Commodity.Isotope) ? 2 : (c == Commodity.Polymer ? -5 : 0), null) // New star system with developed polymer production. Polymer prices -5. Component and isotope +2.
             };
         }

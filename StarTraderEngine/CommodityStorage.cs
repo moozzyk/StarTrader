@@ -40,7 +40,7 @@
 			get { return 10; }
 		}
 
-		public virtual  int GetCount(Commodity commodity)
+		public virtual int GetCount(Commodity commodity)
 		{
 			return m_storage[commodity];
 		}
